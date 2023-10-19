@@ -1,33 +1,39 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Signup from './pages/signup'
+import Login from './pages/login'
+import { Link, Outlet } from 'react-router-dom'
+import { useLogout } from './hooks/useLogout'
+import { useAuthContext } from './hooks/useAuthContext'
 
 function App() {
   const [count, setCount] = useState(0)
 
+  const { logout } = useLogout()
+  const { user } = useAuthContext()
+
+  const handleClick = () => {
+    logout()
+  }
+
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <Link to="/">Home</Link>
+        <Link to="/login">Login</Link>
+        <Link to="/signup">Signup</Link>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      {user && (
+        <div>
+          <span>{user.email}</span>
+          <button onClick={handleClick}>Log out</button>
+        </div>
+      )}
+      {!user && (
+      <div>
+        <Outlet />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      )}
     </>
   )
 }
