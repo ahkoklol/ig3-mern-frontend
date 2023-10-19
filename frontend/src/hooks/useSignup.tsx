@@ -19,7 +19,7 @@ export const useSignup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { dispatch } = useAuthContext();
 
-  const signup = async (email: string, password: string) => {
+  const signup = async (email: string, password: string, name: string, surname: string, role: string) => {
     setIsLoading(true);
     setError(null);
 
@@ -27,7 +27,7 @@ export const useSignup = () => {
       // Make a POST request to your backend for user signup
       const response: AxiosResponse<SignupResponse> = await axios.post(
         'http://localhost:5000/api/user/signup',
-        { email, password }
+        { email, password, name, surname, role }
       );
 
       // Handle the response

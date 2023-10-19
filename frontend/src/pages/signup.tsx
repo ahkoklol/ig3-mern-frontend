@@ -19,6 +19,13 @@ import { useSignup } from '../hooks/useSignup';
 function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+
+// Set the role to "student" for every new user
+// the teachers will have to ask for a role change
+  const role = 'student';
+
   const { signup, error, isLoading } = useSignup();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -26,7 +33,7 @@ function SignUp() {
 
     try {
       // Call the signup function from the hook
-      await signup(email, password);
+      await signup(email, password, name, surname, role);
       // If the signup function executes successfully, it will handle errors and loading states internally.
     } catch (error) {
       // This block is not needed as error handling is done in the hook.
@@ -55,6 +62,31 @@ function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="firstName"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="family-name"
+                  value={surname}
+                  onChange={(event) => setSurname(event.target.value)}
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
