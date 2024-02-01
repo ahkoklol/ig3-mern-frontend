@@ -4,6 +4,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
 type SignupResponse = {
+  _id: string;
   email: string;
   token: string;
 };

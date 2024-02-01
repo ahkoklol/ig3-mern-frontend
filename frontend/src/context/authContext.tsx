@@ -7,8 +7,10 @@ interface AuthContextValue {
 }
 
 // Define the shape of a user (you should define your actual User type)
+// here are the information shown to the user after login
 interface User {
   email: string;
+  _id: string;
   // Define the properties of your User type
   // Example: id, name, email, etc.
 }
@@ -50,13 +52,14 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
   // [] means only do it once when the component renders (check token in localStorage)
   useEffect(() => {
     const userString = localStorage.getItem('user');
+    console.log('userString: ', userString) //properly got user and token
 
   if (userString) {
     const user = JSON.parse(userString);
     if (user && user.email) {
       const email = user.email;
-      const updatedUser: User = { email }; // You should include other user properties
-
+      const _id = user._id;
+      const updatedUser: User = { email, _id }; // You should include other user properties
       dispatch({ type: 'LOGIN', payload: updatedUser });
     }
   }

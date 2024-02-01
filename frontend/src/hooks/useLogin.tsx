@@ -4,6 +4,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
 type LoginResponse = {
+  _id: string;
   email: string;
   token: string;
 };
@@ -24,7 +25,7 @@ export const useLogin = () => {
     setError(null);
 
     try {
-      // Make a POST request to your backend for user signup
+      // Make a POST request to your backend for user login
       const response: AxiosResponse<LoginResponse> = await axios.post(
         'http://localhost:5000/api/user/login',
         { email, password }
@@ -33,10 +34,18 @@ export const useLogin = () => {
       // Handle the response
       if (response.status === 200) {
         // Save the user to local storage
-        localStorage.setItem('user', JSON.stringify(response.data));
+        console.log('User data from server:', response.data);
+        // Extract the user data from the response
+        const { email, token, _id } = response.data;
+
+        // Save the user to local storage
+        // Ensure you only save the necessary user details
+        localStorage.setItem('user', JSON.stringify({ email, token, _id }));
 
         // Update the user in the context
-        dispatch({ type: 'LOGIN', payload: response.data });
+        // Create a user object that matches your User interface
+        const user = { email, _id };
+        dispatch({ type: 'LOGIN', payload: user });
 
         // Show a success message using react-toastify
         toast.success('Welcome back!'); // add user name and surname to the message
