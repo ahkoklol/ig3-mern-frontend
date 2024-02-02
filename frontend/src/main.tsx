@@ -13,6 +13,7 @@ import Login from './pages/login.tsx';
 import Home from './pages/home.tsx';
 import { AuthContextProvider } from './context/authContext.tsx';
 import Profile from './pages/profile.tsx'
+import Quickfire from './pages/quickfire.tsx';
 
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -22,6 +23,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="signup" element={<Signup />} />
     <Route path="login" element={<Login />} />
     <Route path="user/profile/:id" element={<Profile />} />
+    <Route path="quickfire" element={<Quickfire />} />
   </Route>
 ));
 

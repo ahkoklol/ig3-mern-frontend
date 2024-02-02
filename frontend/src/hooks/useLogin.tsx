@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useAuthContext } from "./useAuthContext";
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 type LoginResponse = {
   _id: string;
@@ -34,7 +34,7 @@ export const useLogin = () => {
       // Handle the response
       if (response.status === 200) {
         // Save the user to local storage
-        console.log('User data from server:', response.data);
+        // console.log('User data from server:', response.data); // ok
         // Extract the user data from the response
         const { email, token, _id } = response.data;
 

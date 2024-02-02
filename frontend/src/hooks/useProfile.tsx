@@ -15,18 +15,17 @@ interface UserProfile {
     dateJoined: string; // Date in string format
 }
 
-
 export const useProfile = () => {
-  const { user } = useAuthContext();
+  const { user } = useAuthContext(); 
   const [profile, setProfile] = useState<UserProfile | null>(null);
-
-  console.log(user)
+  console.log('user1:', user) // user null
+  console.log('context:', useAuthContext()) // user null
 
   useEffect(() => {
     const fetchProfile = async () => {
+      console.log('user2:', user) // user null
       if (user) {
         try {
-          // Replace 'YOUR_BACKEND_URL' with the actual URL of your backend route.
           const response = await axios.get(`http://localhost:5000/user/profile/${user._id}`);
           setProfile(response.data);
         } catch (error) {

@@ -52,20 +52,19 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
   // [] means only do it once when the component renders (check token in localStorage)
   useEffect(() => {
     const userString = localStorage.getItem('user');
-    console.log('userString: ', userString) //properly got user and token
+    //console.log('userString: ', userString) //properly got user and token
 
   if (userString) {
     const user = JSON.parse(userString);
-    if (user && user.email) {
-      const email = user.email;
-      const _id = user._id;
-      const updatedUser: User = { email, _id }; // You should include other user properties
+    if (user && user.email && user._id) {
+      const { email, _id } = user;
+      const updatedUser: User = { email, _id }; // Assuming 'User' type includes only 'email' and '_id'
       dispatch({ type: 'LOGIN', payload: updatedUser });
     }
   }
   }, []) 
 
-  console.log('AuthContext state: ', state);
+  // console.log('AuthContext state: ', state); // state good
 
   return (
     <AuthContext.Provider value={{ user: state.user, dispatch }}>
