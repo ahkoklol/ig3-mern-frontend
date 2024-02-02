@@ -26,7 +26,7 @@ function App() {
         <Navbar />
         <div>
           <Link to="/">Home</Link>
-          {!user && <Link to="/login">Login</Link>}
+          {!user && <Link to="/login">Login</Link>} {/* If there is no user, show the Login link */}
           {!user && <Link to="/signup">Signup</Link>}
           {user && (
             <Link to={`/user/profile/${user._id}`}>Profile</Link>
@@ -38,11 +38,11 @@ function App() {
             <button onClick={handleClick}>Log out</button>
           </div>
         )}
-        {!user && (
+        
           <div>
             <Outlet />
           </div>
-        )}
+        
       </div>
       <Footer />
     </ThemeProvider>

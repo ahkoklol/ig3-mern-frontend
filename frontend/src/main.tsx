@@ -14,6 +14,11 @@ import Home from './pages/home.tsx';
 import { AuthContextProvider } from './context/authContext.tsx';
 import Profile from './pages/profile.tsx'
 import Quickfire from './pages/quickfire.tsx';
+import Privacy from './pages/privacy.tsx';
+import Terms from './pages/terms.tsx';
+import Teacher from './pages/teacher.tsx';
+import CreateQuestion from './pages/createquestion.tsx';
+import EditQuestion from './pages/editquestion.tsx';
 
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -24,6 +29,11 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="login" element={<Login />} />
     <Route path="user/profile/:id" element={<Profile />} />
     <Route path="quickfire" element={<Quickfire />} />
+    <Route path="privacy-policy" element={<Privacy/>} />
+    <Route path="terms-of-use" element={<Terms/>} />
+    <Route path="teacher" element={<Teacher />} />
+    <Route path="createquestion" element={<CreateQuestion />} />
+    <Route path="editquestion" element={<EditQuestion />} />
   </Route>
 ));
 

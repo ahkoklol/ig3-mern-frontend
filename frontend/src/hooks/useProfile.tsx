@@ -13,20 +13,21 @@ interface UserProfile {
     teachingClasses: string[]; // Array of Class IDs (string format)
     assignedClasses: string[]; // Array of Class IDs (string format)
     dateJoined: string; // Date in string format
+    _id: string;
 }
 
 export const useProfile = () => {
   const { user } = useAuthContext(); 
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  console.log('user1:', user) // user null
-  console.log('context:', useAuthContext()) // user null
+  //console.log('user1:', user) // ok
+  //console.log('context:', useAuthContext()) // ok
 
   useEffect(() => {
     const fetchProfile = async () => {
-      console.log('user2:', user) // user null
+      //console.log('user2:', user) // ok
       if (user) {
         try {
-          const response = await axios.get(`http://localhost:5000/user/profile/${user._id}`);
+          const response = await axios.get(`http://localhost:5000/api/user/profile/${user._id}`);
           setProfile(response.data);
         } catch (error) {
           console.error("Error fetching user profile:", error);
@@ -37,6 +38,7 @@ export const useProfile = () => {
 
     fetchProfile();
   }, [user]);
+  //console.log('profile1:', profile) // ok
 
   return { profile };
 };

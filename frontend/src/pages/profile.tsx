@@ -11,12 +11,13 @@ import {
 } from "@mui/material";
 import { Edit, Settings } from "@mui/icons-material";
 import { useProfile } from "../hooks/useProfile";
+import { format, parseISO } from 'date-fns';
 
 const Profile = () => {
   const { profile } = useProfile();
 
   // Check if profile is not null
-  console.log('profile:', profile)
+  // console.log('profile:', profile) // ok
   if (profile) {
     return (
       <Container maxWidth="sm">
@@ -46,7 +47,7 @@ const Profile = () => {
               <ListItemText primary="Progress" secondary={profile.progress} />
             </ListItem>
             <ListItem>
-              <ListItemText primary="Date Joined" secondary={profile.dateJoined} />
+            <ListItemText primary="Date Joined" secondary={format(parseISO(profile.dateJoined), 'dd/MM/yyyy')}/>
             </ListItem>
           </List>
 

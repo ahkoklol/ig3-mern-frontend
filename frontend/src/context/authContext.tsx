@@ -11,6 +11,7 @@ interface AuthContextValue {
 interface User {
   email: string;
   _id: string;
+  role: string;
   // Define the properties of your User type
   // Example: id, name, email, etc.
 }
@@ -57,8 +58,8 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
   if (userString) {
     const user = JSON.parse(userString);
     if (user && user.email && user._id) {
-      const { email, _id } = user;
-      const updatedUser: User = { email, _id }; // Assuming 'User' type includes only 'email' and '_id'
+      const { email, _id, role } = user;
+      const updatedUser: User = { email, _id, role }; // Assuming 'User' type includes only 'email' and '_id'
       dispatch({ type: 'LOGIN', payload: updatedUser });
     }
   }

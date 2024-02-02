@@ -10,13 +10,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
-import { AxiosError } from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLogin } from '../hooks/useLogin';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login, error, isLoading } = useLogin();
@@ -28,6 +28,7 @@ export default function Login() {
       // Call the signup function from the hook
       await login(email, password);
       // If the signup function executes successfully, it will handle errors and loading states internally.
+      navigate('/'); // Redirect to home page
     } catch (error) {
       // This block is not needed as error handling is done in the hook.
       console.error('Signup error:', error);

@@ -3,8 +3,17 @@ import { AppBar, Toolbar, Typography, IconButton, Menu, MenuItem } from "@mui/ma
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useProfile } from "../hooks/useProfile";
 
 const Navbar: React.FC = () => {
+
+  const { user } = useAuthContext();
+  //console.log('user:', user) // ok
+  const { profile } = useProfile();
+  //console.log('profile:', profile) // ok
+  //console.log('role:', profile?.role) // ok
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick: React.MouseEventHandler = (event) => {
@@ -31,7 +40,10 @@ const Navbar: React.FC = () => {
             <MenuItem component={Link} to="/exam" onClick={handleClose} sx={{ color: 'black' }}>Full Exam</MenuItem>
             <MenuItem component={Link} to="/quickfire" onClick={handleClose} sx={{ color: 'black' }}>Quickfire</MenuItem>
             <MenuItem component={Link} to="/practice" onClick={handleClose} sx={{ color: 'black' }}>Practice</MenuItem>
-            <MenuItem component={Link} to="/profile" onClick={handleClose} sx={{ color: 'black' }}>Profile</MenuItem>
+            <MenuItem component={Link} to={user ? `/user/profile/${user._id}` : '/'} onClick={handleClose} sx={{ color: 'black' }}>Profile</MenuItem>
+            {user && profile?.role === 'teacher' && (
+              <MenuItem component={Link} to="/teacher" onClick={handleClose} sx={{ color: 'black' }}>Teacher Section</MenuItem>
+            )}
           </Menu>
         </>
       </Toolbar>

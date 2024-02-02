@@ -10,11 +10,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
-import { AxiosError } from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSignup } from '../hooks/useSignup';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const [email, setEmail] = useState('');
@@ -25,6 +24,7 @@ function SignUp() {
 // Set the role to "student" for every new user
 // the teachers will have to ask for a role change
   const role = 'student';
+  const navigate = useNavigate();
 
   const { signup, error, isLoading } = useSignup();
 
@@ -35,6 +35,7 @@ function SignUp() {
       // Call the signup function from the hook
       await signup(email, password, name, surname, role);
       // If the signup function executes successfully, it will handle errors and loading states internally.
+      navigate('/'); // Redirect to home page
     } catch (error) {
       // This block is not needed as error handling is done in the hook.
       console.error('Signup error:', error);

@@ -6,6 +6,7 @@ import TimelapseIcon from '@mui/icons-material/Timelapse';
 import BarChartIcon from '@mui/icons-material/BarChart';
 
 export default function home() {
+
   return (
     <Container maxWidth="lg">
       <Box my={4}>
