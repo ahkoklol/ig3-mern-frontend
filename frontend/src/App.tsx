@@ -24,20 +24,6 @@ function App() {
       <div>
         <ToastContainer />
         <Navbar />
-        <div>
-          <Link to="/">Home</Link>
-          {!user && <Link to="/login">Login</Link>} {/* If there is no user, show the Login link */}
-          {!user && <Link to="/signup">Signup</Link>}
-          {user && (
-            <Link to={`/user/profile/${user._id}`}>Profile</Link>
-          )}
-        </div>
-        {user && (
-          <div>
-            <span>{user.email}</span>
-            <button onClick={handleClick}>Log out</button>
-          </div>
-        )}
         
           <div>
             <Outlet />

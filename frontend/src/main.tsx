@@ -19,6 +19,11 @@ import Terms from './pages/terms.tsx';
 import Teacher from './pages/teacher.tsx';
 import CreateQuestion from './pages/createquestion.tsx';
 import EditQuestion from './pages/editquestion.tsx';
+import LoggedOutExam from './pages/loggedOutExam.tsx';
+import LoggedOutQuickfire from './pages/loggedOutQuickfire.tsx';
+import LoggedOutPractice from './pages/loggedOutPractice.tsx';
+import Exams from './pages/exam.tsx';
+import TakeExam from './pages/takeExam.tsx';
 
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -34,6 +39,11 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="teacher" element={<Teacher />} />
     <Route path="createquestion" element={<CreateQuestion />} />
     <Route path="editquestion" element={<EditQuestion />} />
+    <Route path="loggedOutExam" element={<LoggedOutExam />} />
+    <Route path="loggedOutQuickfire" element={<LoggedOutQuickfire />} />
+    <Route path="loggedOutPractice" element={<LoggedOutPractice />} />
+    <Route path="exams" element={<Exams />} />
+    <Route path="exam/:id" element={<TakeExam />} />
   </Route>
 ));
 

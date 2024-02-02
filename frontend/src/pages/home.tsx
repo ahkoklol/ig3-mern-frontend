@@ -4,13 +4,16 @@ import BookIcon from '@mui/icons-material/Book';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
 import TimelapseIcon from '@mui/icons-material/Timelapse';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 export default function home() {
+
+  const { user } = useAuthContext();
 
   return (
     <Container maxWidth="lg">
       <Box my={4}>
-      <Typography variant="h2" component="h1" gutterBottom style={{ color: 'rgb(19, 38, 77)' }}>
+      <Typography variant="h2" component="h1" gutterBottom style={{ color: 'rgb(19, 38, 77)', marginTop: '60px' }}>
         Level Up. Pass the exam with flying colors.
       </Typography>
         <Typography variant="h5" component="p" gutterBottom style={{ color: 'rgb(19, 38, 77)' }}>
@@ -69,14 +72,28 @@ export default function home() {
             <Typography variant="body1" align="center">
               Start your journey to TOEIC Excellence today
             </Typography>
+            {!user && (
             <CardActions style={{ justifyContent: 'center', padding: '0', margin: '8px 0' }}>
-              <Button variant="contained" sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
+              <Button variant="contained" href='/signup' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
                 Sign Up for Free
               </Button>
-              <Button variant="contained" sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} >
+              <Button variant="contained" href='/loggedOutPractice' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} >
                 Explore Practice Tests
               </Button>
+            </CardActions>)}
+            {user && (
+              <CardActions style={{ justifyContent: 'center', padding: '0', margin: '8px 0' }}>
+              <Button variant="contained" href='/quickfire' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
+                Quickfire
+              </Button>
+              <Button variant="contained" href='/exam' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} >
+                Full Exam
+              </Button>
+              <Button variant="contained" href='/practice' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} >
+                Part Practice
+              </Button>
             </CardActions>
+            )}
           </Paper>
         </Box>
       </Box>

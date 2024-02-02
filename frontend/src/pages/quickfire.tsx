@@ -97,7 +97,8 @@ const Quickfire: React.FC = () => {
 
   return (
     <Container maxWidth="sm">
-      <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
+        <Typography variant="h3" gutterBottom sx={{color: 'black', marginBottom: '40px'}}>Quickfire</Typography>
+      <Paper elevation={3} sx={{ p: 2, mt: 2, marginBottom: '50px' }}>
         <Typography variant="h5" gutterBottom>{question.text}</Typography>
         {question.choices.map((choice, index) => (
           <AnswerButton

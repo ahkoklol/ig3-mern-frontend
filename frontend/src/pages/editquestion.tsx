@@ -8,6 +8,9 @@ interface Question {
   choices: string[];
   correctAnswer: string;
   teacherCorrection: string;
+  examNumber: number;
+  category: string;
+  part: string;
 }
 
 const EditQuestion: React.FC = () => {
@@ -73,6 +76,8 @@ const EditQuestion: React.FC = () => {
       const newChoices = [...editedQuestion.choices];
       newChoices[index] = value;
       setEditedQuestion({ ...editedQuestion, choices: newChoices });
+    } else if (name === 'examNumber') {
+        setEditedQuestion({ ...editedQuestion, [name]: parseInt(value, 10) });
     } else {
       setEditedQuestion({ ...editedQuestion, [name]: value });
     }
@@ -90,10 +95,13 @@ const EditQuestion: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="md">
-      <Typography variant="h4" gutterBottom sx={{color: 'black'}}>Edit Questions</Typography>
-      <Typography variant="h7" gutterBottom sx={{color: 'black'}}>This section is only available to teachers. You can edit questions, answers and explanations. You can also delete a question, but be careful doing so. Do not use "" or A) B) C) D) for the answers. Please fill in all fields, and if you don't give the explanation, students may get pissed.</Typography>
-      {questions.map((question, index) => (
+    <Container maxWidth="lg">
+      <Typography variant="h4" gutterBottom sx={{color: 'black', marginTop: '60px'}}>Edit Questions</Typography>
+      <Typography variant="body2" gutterBottom sx={{color: 'black', textAlign: 'justify'}}>This section is only available to teachers. You can edit questions, answers and explanations. You can also delete a question, but be careful doing so. Do not use "" or A) B) C) D) for the answers. Please fill in all fields, and if you don't give the explanation, students may get pissed. If you are creating a Quickfire question, please input 0 for the exam number. The category is either Listening or Reading. There are 4 parts in Listening: Photographs, Question-Response, Conversations, Talks. There are 3 parts in Reading: Incomplete Sentences, Text Completion, Single + Multiple Passages. Please be careful when entering information and double check.</Typography>
+      <Button variant="contained" href='/teacher' sx={{ marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
+            Back to Dashboard
+        </Button>
+        {questions.map((question, index) => (
         <Box key={question._id} mb={2} p={2} border={1} borderRadius={2} sx={{color: 'black', marginTop: '20px', marginBottom: '20px'}}>
           {editIndex === index ? (
             <>
@@ -136,14 +144,47 @@ const EditQuestion: React.FC = () => {
                 onChange={handleEditChange}
                 margin="normal"
               />
+              <TextField
+                fullWidth
+                label="Exam Number"
+                variant="outlined"
+                name="examNumber"
+                value={editedQuestion?.examNumber}
+                onChange={handleEditChange}
+                margin="normal"
+                type="number"
+              />
+              <TextField
+                fullWidth
+                label="Category"
+                variant="outlined"
+                name="category"
+                value={editedQuestion?.category}
+                onChange={handleEditChange}
+                margin="normal"
+              />
+              <TextField
+                fullWidth
+                label="Part"
+                variant="outlined"
+                name="part"
+                value={editedQuestion?.part}
+                onChange={handleEditChange}
+                margin="normal"
+              />
               <Button onClick={handleConfirmEdit} variant="contained" color="primary" sx={{marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}}>Confirm</Button>
             </>
           ) : (
             <>
               <Typography variant="h6">{question.text}</Typography>
               {question.choices.map((choice, choiceIndex) => (
-                <Typography key={choiceIndex}>{`Choice ${choiceIndex + 1}: ${choice}`}</Typography>
+                <Typography key={choiceIndex} sx={{textAlign: 'justify'}}>{`Choice ${choiceIndex + 1}: ${choice}`}</Typography>
               ))}
+                <Typography sx={{textAlign: 'justify'}}>{`Correct Answer: ${question.correctAnswer}`}</Typography>
+                <Typography sx={{textAlign: 'justify'}}>{`Teacher Correction: ${question.teacherCorrection}`}</Typography>
+                <Typography sx={{textAlign: 'justify'}}>{`Exam Number: ${question.examNumber}`}</Typography>
+                <Typography sx={{textAlign: 'justify'}}>{`Category: ${question.category}`}</Typography>
+                <Typography sx={{textAlign: 'justify'}}>{`Part: ${question.part}`}</Typography>
               <Button onClick={() => handleEditClick(index)} variant="outlined" color="primary" sx={{ marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}}>Edit</Button>
               <Button onClick={() => handleClickOpenDeleteDialog(question._id)} variant="outlined" color="primary" sx={{ marginLeft: '10px', marginTop: '10px', backgroundColor: 'red', color: 'white', '&:hover': {backgroundColor: 'rgb(153, 0, 0)', borderColor: 'rgb(153, 0, 0)'} }}>Delete</Button>
               <Dialog
@@ -169,6 +210,9 @@ const EditQuestion: React.FC = () => {
           )}
         </Box>
       ))}
+        <Button variant="contained" href='/teacher' sx={{ marginBottom: '20px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
+            Back to Dashboard
+        </Button>
     </Container>
   );
 };
