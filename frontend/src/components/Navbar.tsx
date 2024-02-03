@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
             {!user && (<MenuItem component={Link} to="/loggedOutExam" onClick={handleClose} sx={{ color: 'black' }}>Full Exam</MenuItem>)}
             {user && (<MenuItem component={Link} to="/exams" onClick={handleClose} sx={{ color: 'black' }}>Full Exam</MenuItem>)}
             {!user && (<MenuItem component={Link} to="/loggedOutQuickfire" onClick={handleClose} sx={{ color: 'black' }}>Quickfire</MenuItem>)}
-            {user && (<MenuItem component={Link} to="/quickfire" onClick={handleClose} sx={{ color: 'black' }}>Quickfire</MenuItem>)}
+            {user && (<MenuItem component={Link} to="/quickfirePage" onClick={handleClose} sx={{ color: 'black' }}>Quickfire</MenuItem>)}
             {!user && (<MenuItem component={Link} to="/loggedOutPractice" onClick={handleClose} sx={{ color: 'black' }}>Part Practice</MenuItem>)}
             {user && (<MenuItem component={Link} to="/practice" onClick={handleClose} sx={{ color: 'black' }}>Part Practice</MenuItem>)}
             {user && (<MenuItem component={Link} to={user ? `/user/profile/${user._id}` : '/'} onClick={handleClose} sx={{ color: 'black' }}>Profile</MenuItem>)}

@@ -24,6 +24,7 @@ import LoggedOutQuickfire from './pages/loggedOutQuickfire.tsx';
 import LoggedOutPractice from './pages/loggedOutPractice.tsx';
 import Exams from './pages/exam.tsx';
 import TakeExam from './pages/takeExam.tsx';
+import QuickfirePage from './pages/quickfirePage.tsx';
 
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -43,7 +44,8 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="loggedOutQuickfire" element={<LoggedOutQuickfire />} />
     <Route path="loggedOutPractice" element={<LoggedOutPractice />} />
     <Route path="exams" element={<Exams />} />
-    <Route path="exam/:id" element={<TakeExam />} />
+    <Route path="exam/:examNumber" element={<TakeExam />} />
+    <Route path="quickfirePage" element={<QuickfirePage />} />
   </Route>
 ));
 
