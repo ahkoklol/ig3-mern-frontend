@@ -44,6 +44,12 @@ const TeacherPage: React.FC = () => {
                   <Typography>
                     Edit or create full TOEIC type exams.
                   </Typography>
+                  <Button variant="contained" color="primary" component={Link} to="/createexam" sx={{ marginTop: '15px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}>
+                        Create Exam
+                    </Button>
+                    <Button variant="contained" color="secondary" component={Link} to="/editexam" sx={{ marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}>
+                        Edit Exam
+                    </Button>
                 </CardContent>
               </Card>
             </Grid>
