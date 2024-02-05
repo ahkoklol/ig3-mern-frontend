@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Typography, Button, Card, CardContent, RadioGroup, FormControlLabel, Radio, CircularProgress, Box, Paper } from '@mui/material';
 import axios from 'axios';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 interface Question {
   _id: string;
@@ -18,6 +19,14 @@ interface ExamData {
   time: number;
 }
 
+interface ScoreData {
+    examNumber: number;
+    questions: number;
+    score: number;
+    date: Date;
+    student: string;
+}
+
 const TakeExam: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<{ [questionId: string]: string }>({});
@@ -26,6 +35,9 @@ const TakeExam: React.FC = () => {
   const [showResults, setShowResults] = useState<boolean>(false);
   const { examNumber } = useParams<{ examNumber: string }>();
   const [timer, setTimer] = useState<number | null>(null);
+
+  const { user } = useAuthContext();
+  //console.log('user:', user) //ok
 
   useEffect(() => {
     const fetchExam = async () => {
@@ -73,16 +85,45 @@ const TakeExam: React.FC = () => {
     }));
   };
 
-  const handleSubmitExam = () => {
+  const handleSubmitExam = async () => {
     let newScore = 0;
     questions.forEach(question => {
-      if (answers[question._id] === question.correctAnswer) {
-        newScore += 1;
-      }
+        if (answers[question._id] === question.correctAnswer) {
+            newScore += 1;
+        }
     });
     setScore(newScore); // Set the final score
     setShowResults(true); // Show the results
-  };
+
+    // Before using examNumber, ensure it's defined and is a string
+    const parsedExamNumber = examNumber ? parseInt(examNumber, 10) : null;
+
+    if (parsedExamNumber === null) {
+        console.error('Exam number is not defined');
+        return;
+    }
+
+    // Ensure there's a user before attempting to submit the score
+    if (user && user._id) {
+        const scoreData = {
+            examNumber: parsedExamNumber, // Make sure examNumber is parsed to a number if it's not already
+            questions: questions.length,
+            score: newScore,
+            date: new Date(), // This will automatically be converted to the appropriate format (ISO string) when sent as JSON
+            student: user._id // Use the user's _id from the context
+        };
+
+        // Post the score data to the backend
+        try {
+            const response = await axios.post('http://localhost:5000/api/score/create', scoreData);
+            //console.log('Score submitted successfully:', response.data);
+        } catch (error) {
+            console.error('Error submitting score:', error);
+        }
+    } else {
+        console.error('No user found. Score not submitted.');
+    }
+};
 
   if (loading) {
     return <CircularProgress />;
