@@ -29,6 +29,9 @@ import CreateExam from './pages/createexam.tsx';
 import EditExam from './pages/editexam.tsx';
 import PracticePage from './pages/practice.tsx';
 import IncompleteSentences from './pages/parts/incompletesentences.tsx';
+import TakeIncompleteSentences from './pages/parts/takepart/takeincompletesentences.tsx';
+import CreatePart from './pages/createpart.tsx';
+import EditPart from './pages/editpart.tsx';
 
 const router = createBrowserRouter(createRoutesFromElements(
   
@@ -53,6 +56,9 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="editexam" element={<EditExam />} />
     <Route path="practice" element={<PracticePage />} />
     <Route path="part/incomplete-sentences" element={<IncompleteSentences />} />
+    <Route path="part/:ref" element={<TakeIncompleteSentences />} />
+    <Route path="createpart" element={<CreatePart />} />
+    <Route path="editpart" element={<EditPart />} />
   </Route>
 ));
 

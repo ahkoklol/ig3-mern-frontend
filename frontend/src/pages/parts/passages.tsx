@@ -19,7 +19,7 @@ const Passages: React.FC = () => {
         // Function to fetch parts
         const fetchParts = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/part/Text-Completion');
+                const response = await axios.get('http://localhost:5000/api/part/allparts/Text-Completion');
                 setParts(response.data); // Assuming the API returns an array of parts
             } catch (error) {
                 console.error('Error fetching parts:', error);

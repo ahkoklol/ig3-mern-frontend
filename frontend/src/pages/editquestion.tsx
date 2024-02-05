@@ -11,6 +11,7 @@ interface Question {
   examNumber: number;
   category: string;
   part: string;
+  ref: string;
 }
 
 const EditQuestion: React.FC = () => {
@@ -172,6 +173,15 @@ const EditQuestion: React.FC = () => {
                 onChange={handleEditChange}
                 margin="normal"
               />
+              <TextField
+                fullWidth
+                label="Part ref"
+                variant="outlined"
+                name="ref"
+                value={editedQuestion?.ref}
+                onChange={handleEditChange}
+                margin="normal"
+              />
               <Button onClick={handleConfirmEdit} variant="contained" color="primary" sx={{marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}}>Confirm</Button>
             </>
           ) : (
@@ -185,6 +195,7 @@ const EditQuestion: React.FC = () => {
                 <Typography sx={{textAlign: 'justify'}}>{`Exam Number: ${question.examNumber}`}</Typography>
                 <Typography sx={{textAlign: 'justify'}}>{`Category: ${question.category}`}</Typography>
                 <Typography sx={{textAlign: 'justify'}}>{`Part: ${question.part}`}</Typography>
+                <Typography sx={{textAlign: 'justify'}}>{`Part ref: ${question.ref}`}</Typography>
               <Button onClick={() => handleEditClick(index)} variant="outlined" color="primary" sx={{ marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}}>Edit</Button>
               <Button onClick={() => handleClickOpenDeleteDialog(question._id)} variant="outlined" color="primary" sx={{ marginLeft: '10px', marginTop: '10px', backgroundColor: 'red', color: 'white', '&:hover': {backgroundColor: 'rgb(153, 0, 0)', borderColor: 'rgb(153, 0, 0)'} }}>Delete</Button>
               <Dialog

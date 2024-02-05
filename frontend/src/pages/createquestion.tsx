@@ -10,6 +10,7 @@ interface QuestionForm {
   examNumber: number;
   category: string;
   part: string;
+  ref: string;
 }
 
 const CreateQuestion: React.FC = () => {
@@ -21,6 +22,7 @@ const CreateQuestion: React.FC = () => {
     examNumber: 0,
     category: '',
     part: '',
+    ref: '',
   });
 
   const [submitStatus, setSubmitStatus] = useState<{ status: 'idle' | 'success' | 'error', message: string }>({ status: 'idle', message: '' });
@@ -46,6 +48,7 @@ const CreateQuestion: React.FC = () => {
         examNumber: formData.examNumber,
         category: formData.category,
         part: formData.part,
+        ref: formData.ref,
       });
       setSubmitStatus({ status: 'success', message: 'Question created successfully!' });
       // Optionally reset form here
@@ -57,6 +60,7 @@ const CreateQuestion: React.FC = () => {
         examNumber: 0,
         category: '',
         part: '',
+        ref: '',
       });
     } catch (error) {
       console.error('Error creating question:', error);
@@ -135,6 +139,15 @@ const CreateQuestion: React.FC = () => {
             variant="outlined"
             name="part"
             value={formData.part}
+            onChange={handleInputChange}
+            margin="normal"
+        />
+        <TextField
+            fullWidth
+            label=" Part ref"
+            variant="outlined"
+            name="ref"
+            value={formData.ref}
             onChange={handleInputChange}
             margin="normal"
         />

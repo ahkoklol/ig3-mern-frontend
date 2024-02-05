@@ -37,7 +37,7 @@ const ExamPage: React.FC = () => {
   return (
     <Container maxWidth="lg" sx={{ marginBottom: '20px' }}>
         <Typography variant="h4" sx={{ mb: 4, color: 'black', mt: 8 }}>
-            Part Practice
+        Take a full-length TOEIC exam
           </Typography>
         <Grid container spacing={4} alignItems="center" >
             <Grid item xs={12} md={5}>

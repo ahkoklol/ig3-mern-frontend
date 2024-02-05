@@ -61,6 +61,12 @@ const TeacherPage: React.FC = () => {
                   <Typography>
                     Edit or create practice parts. Students can practice a single part of the TOEIC exam (Listening, Reading comprehension, or Choosing the right word)
                   </Typography>
+                  <Button variant="contained" color="primary" component={Link} to="/createpart" sx={{ marginTop: '15px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}>
+                        Create Practice Part
+                    </Button>
+                    <Button variant="contained" color="secondary" component={Link} to="/editpart" sx={{ marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}>
+                        Edit Practice Part
+                    </Button>
                 </CardContent>
               </Card>
             </Grid>
