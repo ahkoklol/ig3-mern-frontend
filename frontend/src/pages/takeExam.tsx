@@ -10,6 +10,8 @@ interface Question {
   choices: string[];
   correctAnswer: string;
   teacherCorrection: string;
+  imagePath?: string;
+  audioPath?: string;
 }
 
 interface ExamData {
@@ -136,6 +138,10 @@ const TakeExam: React.FC = () => {
         {questions.map((question, questionIndex) => (
           <Box key={question._id} component={Paper} elevation={3} sx={{ p: 2, mt: 2, marginBottom: '30px' }}>
             <Typography variant="h5" gutterBottom>{question.text}</Typography>
+            {/* Conditionally render the image if imagePath is present */}
+            {question.imagePath && (
+              <img src={`http://localhost:5000/${question.imagePath}`} alt="Question" style={{ maxWidth: '100%', marginBottom: '20px', marginTop: '20px' }} />
+            )}
             {question.choices.map((choice, index) => (
               <Button
                 key={index}
@@ -177,6 +183,14 @@ const TakeExam: React.FC = () => {
         <Card key={question._id} variant="outlined" sx={{ marginBottom: 2 }}>
           <CardContent>
             <Typography>{question.text}</Typography>
+            {/* Conditionally render the image if imagePath is present */}
+            {question.imagePath && (
+              <img src={`http://localhost:5000/${question.imagePath}`} alt="Question" style={{ maxWidth: '100%', marginBottom: '20px', marginTop: '20px' }} />
+            )}
+            {/* Conditionally render the audio if audioPath is present */}
+            {question.audioPath && (
+              <audio controls src={`http://localhost:5000/${question.audioPath}`} style={{ width: '100%', marginBottom: '20px' }} />
+            )}
             <RadioGroup
               value={answers[question._id] || ''}
               onChange={(event) => handleAnswerChange(event, question._id)}
