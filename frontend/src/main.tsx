@@ -32,6 +32,8 @@ import IncompleteSentences from './pages/parts/incompletesentences.tsx';
 import TakeIncompleteSentences from './pages/parts/takepart/takeincompletesentences.tsx';
 import CreatePart from './pages/createpart.tsx';
 import EditPart from './pages/editpart.tsx';
+import ClassesPage from './pages/classes.tsx';
+import Classpage from './pages/class.tsx';
 
 const router = createBrowserRouter(createRoutesFromElements(
   
@@ -59,6 +61,8 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="part/:ref" element={<TakeIncompleteSentences />} />
     <Route path="createpart" element={<CreatePart />} />
     <Route path="editpart" element={<EditPart />} />
+    <Route path="classes" element={<ClassesPage />} />
+    <Route path="class/:classId/students" element={<Classpage />} />
   </Route>
 ));
 

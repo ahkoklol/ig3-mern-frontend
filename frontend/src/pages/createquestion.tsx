@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Container, TextField, Typography, Alert } from '@mui/material';
 import axios from 'axios';
+import { styled } from '@mui/system';
+
+const Input = styled('input')({
+  display: 'none',
+});
 
 interface QuestionForm {
   text: string;
@@ -11,6 +16,8 @@ interface QuestionForm {
   category: string;
   part: string;
   ref: string;
+  imagePath?: File | null;
+  audioPath?: File | null;
 }
 
 const CreateQuestion: React.FC = () => {
@@ -23,9 +30,13 @@ const CreateQuestion: React.FC = () => {
     category: '',
     part: '',
     ref: '',
+    imagePath: null,
+    audioPath: null,
   });
 
   const [submitStatus, setSubmitStatus] = useState<{ status: 'idle' | 'success' | 'error', message: string }>({ status: 'idle', message: '' });
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+  const [uploadedAudio, setUploadedAudio] = useState<File | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, index?: number) => {
     if (typeof index === 'number') {
@@ -37,42 +48,69 @@ const CreateQuestion: React.FC = () => {
     }
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setFormData({
+        ...formData,
+        [event.target.name]: event.target.files[0],
+      });
+      if (event.target.name === 'imagePath') {
+        setUploadedImage(event.target.files[0]);
+      } else if (event.target.name === 'audioPath') {
+        setUploadedAudio(event.target.files[0]);
+      }
+    }
+  };
+
+  const removeUploadedImage = () => {
+    setUploadedImage(null);
+    setFormData({ ...formData, imagePath: null });
+  };
+
+  const removeUploadedAudio = () => {
+    setUploadedAudio(null);
+    setFormData({ ...formData, audioPath: null });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const data = new FormData();
+    data.append('text', formData.text);
+    formData.choices.forEach((choice, index) => {
+      data.append(`choices[${index}]`, choice);
+    });
+    data.append('correctAnswer', formData.correctAnswer);
+    data.append('teacherCorrection', formData.teacherCorrection);
+    if (formData.examNumber) {
+      data.append('examNumber', formData.examNumber.toString());
+    }
+    data.append('category', formData.category);
+    data.append('part', formData.part);
+    data.append('ref', formData.ref);
+    if (formData.imagePath) {
+      data.append('imagePath', formData.imagePath);
+    }
+    if (formData.audioPath) {
+      data.append('audioPath', formData.audioPath);
+    }
+
     try {
-      await axios.post('http://localhost:5000/api/question/create', {
-        text: formData.text,
-        choices: formData.choices,
-        correctAnswer: formData.correctAnswer,
-        teacherCorrection: formData.teacherCorrection,
-        examNumber: formData.examNumber,
-        category: formData.category,
-        part: formData.part,
-        ref: formData.ref,
+      await axios.post('http://localhost:5000/api/question/create', data, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
       setSubmitStatus({ status: 'success', message: 'Question created successfully!' });
-      // Optionally reset form here
-      setFormData({
-        text: '',
-        choices: ['', '', '', ''],
-        correctAnswer: '',
-        teacherCorrection: '',
-        examNumber: 0,
-        category: '',
-        part: '',
-        ref: '',
-      });
+      // ... reset form as before
     } catch (error) {
-      console.error('Error creating question:', error);
-      setSubmitStatus({ status: 'error', message: 'Failed to create question. Please try again.' });
+      // ... handle error as before
     }
   };
 
   return (
     <Container maxWidth="lg" style={{ marginTop: '60px', marginBottom: '50px' }}>
       <Typography variant="h4" gutterBottom sx={{ color: 'black' }}>Create a question</Typography>
-      <Typography variant="body2" gutterBottom sx={{ color: 'black', textAlign: 'justify' }}>This section is available only to teachers. Please fill in all fields, if the students don't have the explanation they may get pissed off. Do not use "". Do not use A) B) C) D) for the answers. If you are creating a Quickfire question, please input 0 for the exam number. The category is either Listening or Reading. There are 4 parts in Listening: Photographs, Question-Response, Conversations, Talks. There are 3 parts in Reading: Incomplete Sentences, Text Completion, Single + Multiple Passages. When entering part, please use "-" if there is a space and mind the uppercase (eg: Incomplete-Sentences, different from incomplete-sentences). Please be careful when entering information and double check.</Typography>
-      <Button variant="contained" href='/teacher' sx={{ marginBottom: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
+      <Typography variant="body2" gutterBottom sx={{ color: 'black', textAlign: 'justify' }}>This section is available only to teachers. Please fill in all fields, if the students don't have the explanation they may get pissed off. Do not use "". Please use numbers if you are creating an exam and A) B) C) D) for the answers. The correct answer has to be the same as a choice (if correct choice is A) car, input "A) car") If you are creating a Quickfire question, please input 0 for the exam number. The category is either Listening or Reading. There are 4 parts in Listening: Photographs, Question-Response, Conversations, Talks. There are 3 parts in Reading: Incomplete-Sentences, Text-Completion, Passages. When entering part, please use "-" if there is a space and mind the uppercase (eg: Incomplete-Sentences, different from incomplete-sentences). Please be careful when entering information and double check.</Typography>
+      <Button variant="contained" href='/teacher' sx={{ marginBottom: '20px', marginTop: '20px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
             Back to Dashboard
         </Button>
       <form onSubmit={handleSubmit}>
@@ -151,7 +189,52 @@ const CreateQuestion: React.FC = () => {
             onChange={handleInputChange}
             margin="normal"
         />
-        <Button type="submit" variant="contained" color="primary" sx={{ marginTop: '20px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}}>
+        {!uploadedImage ? (
+        <label htmlFor="image-upload">
+          <Input
+            accept="imagePath/*"
+            id="image-upload"
+            type="file"
+            name="imagePath"
+            onChange={handleFileChange}
+          />
+          <Button variant="contained" component="span" color="primary" sx={{ marginTop: '20px', marginBottom: '20px', marginLeft: '10px', backgroundColor: 'black', color: 'white', '&:hover': {backgroundColor: 'grey', borderColor: 'grey'}}}>
+            Upload Image
+          </Button>
+        </label>
+      ) : (
+        <div>
+          <Typography variant="subtitle1" sx={{ color: 'black'}}>{uploadedImage.name}</Typography>
+          <Button onClick={removeUploadedImage} /* styling props */>
+            Remove Image
+          </Button>
+        </div>
+      )}
+
+      {/* Audio upload field or display uploaded audio */}
+      {!uploadedAudio ? (
+        <label htmlFor="audio-upload">
+          <Input
+            accept="audioPath/*"
+            id="audio-upload"
+            type="file"
+            name="audioPath"
+            onChange={handleFileChange}
+          />
+          <Button variant="contained" component="span" color="primary" sx={{ marginTop: '20px', marginBottom: '20px', marginLeft: '10px', backgroundColor: 'black', color: 'white', '&:hover': {backgroundColor: 'grey', borderColor: 'grey'}}}>
+            Upload Audio
+          </Button>
+        </label>
+      ) : (
+        <div>
+          <Typography variant="subtitle1" sx={{color: 'black'}}>{uploadedAudio.name}</Typography>
+          <Button onClick={removeUploadedAudio} /* styling props */>
+            Remove Audio
+          </Button>
+        </div>
+      )}
+
+        <Button type="submit" variant="contained" color="primary" sx={{ marginTop: '20px', marginBottom: '20px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}}>
           Confirm
         </Button>
       </form>

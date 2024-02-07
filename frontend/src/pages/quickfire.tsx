@@ -8,6 +8,8 @@ interface Question {
   choices: string[];
   correctAnswer: string;
   teacherCorrection: string;
+  imagePath?: string;
+  audioPath?: string;
 }
 
 interface AnswerButtonProps {
@@ -64,7 +66,7 @@ const Quickfire: React.FC = () => {
   const fetchRandomQuestion = async (): Promise<void> => {
     setLoading(true);
     try {
-      const response = await axios.get<Question>('http://localhost:5000/api/question/random');
+      const response = await axios.get<Question>('http://localhost:5000/api/question/65c28aed47691b1b7abeeef7');
       setQuestion(response.data);
       setSelectedAnswer(null); // Reset selected answer for the new question
     } catch (error) {
@@ -96,9 +98,18 @@ const Quickfire: React.FC = () => {
   const isCorrectSelected = selectedAnswer === question.correctAnswer;
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" sx={{ marginTop: '30px'}}>
         <Typography variant="h3" gutterBottom sx={{color: 'black', marginBottom: '40px'}}>Quickfire</Typography>
       <Paper elevation={3} sx={{ p: 2, mt: 2, marginBottom: '50px' }}>
+        {/* Conditionally render the image if imagePath is present */}
+        {question.imagePath && (
+          <img src={`http://localhost:5000/${question.imagePath}`} alt="Question illustration" style={{ maxWidth: '100%', marginBottom: '20px' }} />
+        )}
+
+        {/* Conditionally render the audio if audioPath is present */}
+        {question.audioPath && (
+          <audio controls src={`http://localhost:5000/${question.audioPath}`} style={{ width: '100%', marginBottom: '20px' }} />
+        )}
         <Typography variant="h5" gutterBottom>{question.text}</Typography>
         {question.choices.map((choice, index) => (
           <AnswerButton

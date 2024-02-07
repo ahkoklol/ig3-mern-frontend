@@ -78,6 +78,9 @@ const TeacherPage: React.FC = () => {
                   <Typography>
                     Monitor your students' improvement with the progress dashboard.
                   </Typography>
+                  <Button variant="contained" color="primary" component={Link} to="/classes" sx={{ marginTop: '15px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}>
+                        Monitor Students
+                    </Button>
                 </CardContent>
               </Card>
             </Grid>
