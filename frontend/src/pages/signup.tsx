@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -26,7 +26,7 @@ function SignUp() {
   const role = 'student';
   const navigate = useNavigate();
 
-  const { signup, error, isLoading } = useSignup();
+  const { signup, isLoading } = useSignup();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

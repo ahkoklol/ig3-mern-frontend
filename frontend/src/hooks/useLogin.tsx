@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
@@ -7,6 +7,7 @@ type LoginResponse = {
   _id: string;
   email: string;
   token: string;
+  role: string;
 };
 
 type ErrorResponse = {
@@ -36,15 +37,15 @@ export const useLogin = () => {
         // Save the user to local storage
         // console.log('User data from server:', response.data); // ok
         // Extract the user data from the response
-        const { email, token, _id } = response.data;
+        const { email, token, _id, role } = response.data;
 
         // Save the user to local storage
         // Ensure you only save the necessary user details
-        localStorage.setItem('user', JSON.stringify({ email, token, _id }));
+        localStorage.setItem('user', JSON.stringify({ email, token, _id, role }));
 
         // Update the user in the context
         // Create a user object that matches your User interface
-        const user = { email, _id };
+        const user = { email, _id, role };
         dispatch({ type: 'LOGIN', payload: user });
 
         // Show a success message using react-toastify

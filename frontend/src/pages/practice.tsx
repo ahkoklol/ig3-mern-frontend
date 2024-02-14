@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Typography, Grid, Button, CardMedia, List, ListItemText, ListItem } from '@mui/material';
+import { Container, Typography, Grid, CardMedia, List, ListItemText, ListItem } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const PracticePage: React.FC = () => {

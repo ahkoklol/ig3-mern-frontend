@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, Typography, Box, Button, Grid, Card, CardContent, CardActions, Paper } from '@mui/material';
 import BookIcon from '@mui/icons-material/Book';
 import HeadphonesIcon from '@mui/icons-material/Headphones';

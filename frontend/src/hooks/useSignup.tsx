@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
@@ -7,6 +7,7 @@ type SignupResponse = {
   _id: string;
   email: string;
   token: string;
+  role: string;
 };
 
 type ErrorResponse = {

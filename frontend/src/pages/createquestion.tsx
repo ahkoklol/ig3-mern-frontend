@@ -38,7 +38,7 @@ const CreateQuestion: React.FC = () => {
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [uploadedAudio, setUploadedAudio] = useState<File | null>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, index?: number) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index?: number) => {
     if (typeof index === 'number') {
       const newChoices = [...formData.choices];
       newChoices[index] = e.target.value;

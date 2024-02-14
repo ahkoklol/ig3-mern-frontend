@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Container, Typography, Box, Grid, Card, CardContent, Paper, CardActions } from '@mui/material';
+import { Button, Container, Typography, Box, Grid, Card, CardContent } from '@mui/material';
 import QuizIcon from '@mui/icons-material/Quiz';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
@@ -13,7 +13,7 @@ const TeacherPage: React.FC = () => {
       <Typography variant="h4" gutterBottom sx={{color: 'black'}}>
         Teacher Dashboard
       </Typography>
-      <Typography variant="h7" gutterBottom sx={{color: 'black'}}>
+      <Typography variant="h6" gutterBottom sx={{color: 'black'}}>
         Welcome to the teacher dashboard. From here you can create and edit questions quickfire questions, exams and practice parts.
         </Typography>
 

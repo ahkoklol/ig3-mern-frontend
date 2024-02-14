@@ -89,7 +89,7 @@ const TakeIncompleteSentences: React.FC = () => {
       return (
         <Container maxWidth="sm">
           <Typography variant="h3" gutterBottom sx={{ color: 'black', marginBottom: '40px', marginTop: '50px' }}>Your Score: {score}/{questions.length}</Typography>
-          {questions.map((question, questionIndex) => (
+          {questions.map((question/*, questionIndex*/) => (
             <Box key={question._id} component={Paper} elevation={3} sx={{ p: 2, mt: 2, marginBottom: '30px' }}>
               <Typography variant="h5" gutterBottom>{question.text}</Typography>
               {question.choices.map((choice, index) => (

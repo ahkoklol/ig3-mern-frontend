@@ -20,14 +20,14 @@ interface ExamData {
   questions: string[];
   time: number;
 }
-
+/*
 interface ScoreData {
     examNumber: number;
     questions: number;
     score: number;
     date: Date;
     student: string;
-}
+}*/
 
 const TakeExam: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -117,7 +117,7 @@ const TakeExam: React.FC = () => {
 
         // Post the score data to the backend
         try {
-            const response = await axios.post('http://localhost:5000/api/score/create', scoreData);
+            /*const response = */await axios.post('http://localhost:5000/api/score/create', scoreData);
             //console.log('Score submitted successfully:', response.data);
         } catch (error) {
             console.error('Error submitting score:', error);
@@ -135,7 +135,7 @@ const TakeExam: React.FC = () => {
     return (
       <Container maxWidth="sm">
         <Typography variant="h3" gutterBottom sx={{ color: 'black', marginBottom: '40px', marginTop: '50px' }}>Your Score: {score}/{questions.length}</Typography>
-        {questions.map((question, questionIndex) => (
+        {questions.map((question/*, questionIndex */) => (
           <Box key={question._id} component={Paper} elevation={3} sx={{ p: 2, mt: 2, marginBottom: '30px' }}>
             <Typography variant="h5" gutterBottom>{question.text}</Typography>
             {/* Conditionally render the image if imagePath is present */}

@@ -60,14 +60,14 @@ const EditQuestion: React.FC = () => {
     setEditedQuestion({ ...questions[index] });
   };
 
-  const handleDelete = async (id: string) => {
+  /*const handleDelete = async (id: string) => {
     try {
       await axios.delete(`http://localhost:5000/api/question/${id}`);
       fetchQuestions(); // Refresh the list after deletion
     } catch (error) {
       console.error('Error deleting question:', error);
     }
-  };
+  };*/
 
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!editedQuestion) return;
