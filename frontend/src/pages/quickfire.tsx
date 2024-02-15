@@ -66,7 +66,7 @@ const Quickfire: React.FC = () => {
   const fetchRandomQuestion = async (): Promise<void> => {
     setLoading(true);
     try {
-      const response = await axios.get<Question>(`${import.meta.env.VITE_BACKEND_URL}/api/question/65c28aed47691b1b7abeeef7`);
+      const response = await axios.get<Question>(`${import.meta.env.VITE_BACKEND_URL}/api/question/random`);
       setQuestion(response.data);
       setSelectedAnswer(null); // Reset selected answer for the new question
     } catch (error) {
