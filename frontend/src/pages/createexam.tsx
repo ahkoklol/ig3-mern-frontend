@@ -26,7 +26,7 @@ const CreateExam: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await axios.post('${import.meta.env.VITE_BACKEND_URL}/api/exam/create', formData);
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/exam/create`, formData);
             setSubmitStatus({ status: 'success', message: 'Exam created successfully!' });
         } catch (error) {
             console.error('Error creating exam:', error);
