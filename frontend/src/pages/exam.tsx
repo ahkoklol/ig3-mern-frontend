@@ -15,7 +15,7 @@ const ExamPage: React.FC = () => {
   useEffect(() => {
     const fetchExams = async () => {
       try {
-        const response = await axios.get<Exam[]>('http://localhost:5000/api/exam/allexams');
+        const response = await axios.get<Exam[]>(`${import.meta.env.VITE_BACKEND_URL}/api/exam/allexams`);
         setExams(response.data);
       } catch (error) {
         console.error('Failed to fetch exams:', error);

@@ -19,7 +19,7 @@ const IncompleteSentences: React.FC = () => {
         // Function to fetch parts
         const fetchParts = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/part/allparts/Incomplete-Sentences');
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/part/allparts/Incomplete-Sentences`);
                 setParts(response.data); // Assuming the API returns an array of parts
             } catch (error) {
                 console.error('Error fetching parts:', error);

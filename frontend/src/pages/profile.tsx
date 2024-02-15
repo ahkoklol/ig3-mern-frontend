@@ -40,7 +40,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (user) {
-      axios.get(`http://localhost:5000/api/score/all/${user._id}`)
+      axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/score/all/${user._id}`)
         .then(response => {
           setExamsTaken(response.data);
         })

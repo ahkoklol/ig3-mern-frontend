@@ -44,11 +44,11 @@ const TakeExam: React.FC = () => {
   useEffect(() => {
     const fetchExam = async () => {
       try {
-        const examResponse = await axios.get<ExamData>(`http://localhost:5000/api/exam/${examNumber}`);
+        const examResponse = await axios.get<ExamData>(`${import.meta.env.VITE_BACKEND_URL}/api/exam/${examNumber}`);
         setTimer(examResponse.data.time); // Set the timer with the fetched exam time
         const examQuestions = await Promise.all(
           examResponse.data.questions.map(questionId =>
-            axios.get<Question>(`http://localhost:5000/api/question/${questionId}`)
+            axios.get<Question>(`${import.meta.env.VITE_BACKEND_URL}/api/question/${questionId}`)
           )
         );
         setQuestions(examQuestions.map(res => res.data));
@@ -117,7 +117,7 @@ const TakeExam: React.FC = () => {
 
         // Post the score data to the backend
         try {
-            /*const response = */await axios.post('http://localhost:5000/api/score/create', scoreData);
+            /*const response = */await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/score/create`, scoreData);
             //console.log('Score submitted successfully:', response.data);
         } catch (error) {
             console.error('Error submitting score:', error);
@@ -140,7 +140,7 @@ const TakeExam: React.FC = () => {
             <Typography variant="h5" gutterBottom>{question.text}</Typography>
             {/* Conditionally render the image if imagePath is present */}
             {question.imagePath && (
-              <img src={`http://localhost:5000/${question.imagePath}`} alt="Question" style={{ maxWidth: '100%', marginBottom: '20px', marginTop: '20px' }} />
+              <img src={`${import.meta.env.VITE_BACKEND_URL}/${question.imagePath}`} alt="Question" style={{ maxWidth: '100%', marginBottom: '20px', marginTop: '20px' }} />
             )}
             {question.choices.map((choice, index) => (
               <Button
@@ -185,11 +185,11 @@ const TakeExam: React.FC = () => {
             <Typography>{question.text}</Typography>
             {/* Conditionally render the image if imagePath is present */}
             {question.imagePath && (
-              <img src={`http://localhost:5000/${question.imagePath}`} alt="Question" style={{ maxWidth: '100%', marginBottom: '20px', marginTop: '20px' }} />
+              <img src={`${import.meta.env.VITE_BACKEND_URL}/${question.imagePath}`} alt="Question" style={{ maxWidth: '100%', marginBottom: '20px', marginTop: '20px' }} />
             )}
             {/* Conditionally render the audio if audioPath is present */}
             {question.audioPath && (
-              <audio controls src={`http://localhost:5000/${question.audioPath}`} style={{ width: '100%', marginBottom: '20px' }} />
+              <audio controls src={`${import.meta.env.VITE_BACKEND_URL}/${question.audioPath}`} style={{ width: '100%', marginBottom: '20px' }} />
             )}
             <RadioGroup
               value={answers[question._id] || ''}

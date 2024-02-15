@@ -18,7 +18,7 @@ const EditExam: React.FC = () => {
   useEffect(() => {
     const fetchExams = async () => {
       try {
-        const response = await axios.get<Exam[]>('http://localhost:5000/api/exam/allexams');
+        const response = await axios.get<Exam[]>(`${import.meta.env.VITE_BACKEND_URL}/api/exam/allexams`);
         setExams(response.data);
       } catch (error) {
         console.error('Failed to fetch exams:', error);
@@ -42,7 +42,7 @@ const EditExam: React.FC = () => {
   const handleDelete = async () => {
     if (currentExam) {
       try {
-        await axios.delete(`http://localhost:5000/api/exam/${currentExam.examNumber}`);
+        await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/exam/${currentExam.examNumber}`);
         setExams(exams.filter(exam => exam._id !== currentExam._id));
         handleCloseDeleteDialog();
       } catch (error) {
@@ -54,7 +54,7 @@ const EditExam: React.FC = () => {
   const handleEditTime = async () => {
     if (currentExam && editTime > 0) {
       try {
-        await axios.patch(`http://localhost:5000/api/exam/${currentExam.examNumber}`, { time: editTime });
+        await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/exam/${currentExam.examNumber}`, { time: editTime });
         setExams(exams.map(exam => exam._id === currentExam._id ? { ...exam, time: editTime } : exam));
         setCurrentExam(null); // Reset current exam
       } catch (error) {

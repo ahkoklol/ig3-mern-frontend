@@ -31,7 +31,7 @@ const TakeIncompleteSentences: React.FC = () => {
     useEffect(() => {
         const fetchExam = async () => {
           try {
-            const examResponse = await axios.get<PartData>(`http://localhost:5000/api/part/${ref}`);
+            const examResponse = await axios.get<PartData>(`${import.meta.env.VITE_BACKEND_URL}/api/part/${ref}`);
             
             setTimer(examResponse.data.time); // Set the timer with the fetched exam time OK
             setQuestions(examResponse.data.questions as unknown as Question[]); // Cast directly to Question[]

@@ -96,7 +96,7 @@ const CreateQuestion: React.FC = () => {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/question/create', data, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/question/create`, data, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setSubmitStatus({ status: 'success', message: 'Question created successfully!' });

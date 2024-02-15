@@ -34,7 +34,7 @@ const ProgressChart: React.FC<ProgressChartProps> = ({ studentId }) => {
   useEffect(() => {
     const fetchScores = async () => {
       try {
-        const response = await axios.get<Score[]>(`http://localhost:5000/api/score/all/${studentId}`);
+        const response = await axios.get<Score[]>(`${import.meta.env.VITE_BACKEND_URL}/api/score/all/${studentId}`);
         const scores = response.data;
 
         // Sort scores by date and calculate average

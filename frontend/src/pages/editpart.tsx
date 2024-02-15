@@ -20,7 +20,7 @@ const EditPart: React.FC = () => {
     useEffect(() => {
         const fetchParts = async () => {
             try {
-                const response = await axios.get<Part[]>('http://localhost:5000/api/part/allparts');
+                const response = await axios.get<Part[]>(`${import.meta.env.VITE_BACKEND_URL}/api/part/allparts`);
                 setParts(response.data);
                 setEditData({ category: '', part: '', time: 0 }); // Reset edit data
             } catch (error) {
@@ -46,7 +46,7 @@ const EditPart: React.FC = () => {
     const handleDelete = async () => {
         if (currentPart) {
             try {
-                await axios.delete(`http://localhost:5000/api/part/${currentPart.ref}`);
+                await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/part/${currentPart.ref}`);
                 setParts(parts.filter(part => part.ref !== currentPart.ref));
                 handleCloseDeleteDialog();
             } catch (error) {
@@ -63,7 +63,7 @@ const EditPart: React.FC = () => {
     const handleEditPart = async () => {
         if (currentPart) {
             try {
-                await axios.put(`http://localhost:5000/api/part/${currentPart.ref}`, editData);
+                await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/part/${currentPart.ref}`, editData);
                 const updatedParts = parts.map(part => part.ref === currentPart.ref ? { ...part, ...editData } : part);
                 setParts(updatedParts);
                 setCurrentPart(null); // Reset current part to close edit mode

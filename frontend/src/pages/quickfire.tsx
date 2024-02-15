@@ -66,7 +66,7 @@ const Quickfire: React.FC = () => {
   const fetchRandomQuestion = async (): Promise<void> => {
     setLoading(true);
     try {
-      const response = await axios.get<Question>('http://localhost:5000/api/question/65c28aed47691b1b7abeeef7');
+      const response = await axios.get<Question>(`${import.meta.env.VITE_BACKEND_URL}/api/question/65c28aed47691b1b7abeeef7`);
       setQuestion(response.data);
       setSelectedAnswer(null); // Reset selected answer for the new question
     } catch (error) {
@@ -103,12 +103,12 @@ const Quickfire: React.FC = () => {
       <Paper elevation={3} sx={{ p: 2, mt: 2, marginBottom: '50px' }}>
         {/* Conditionally render the image if imagePath is present */}
         {question.imagePath && (
-          <img src={`http://localhost:5000/${question.imagePath}`} alt="Question illustration" style={{ maxWidth: '100%', marginBottom: '20px' }} />
+          <img src={`${import.meta.env.VITE_BACKEND_URL}/${question.imagePath}`} alt="Question illustration" style={{ maxWidth: '100%', marginBottom: '20px' }} />
         )}
 
         {/* Conditionally render the audio if audioPath is present */}
         {question.audioPath && (
-          <audio controls src={`http://localhost:5000/${question.audioPath}`} style={{ width: '100%', marginBottom: '20px' }} />
+          <audio controls src={`${import.meta.env.VITE_BACKEND_URL}/${question.audioPath}`} style={{ width: '100%', marginBottom: '20px' }} />
         )}
         <Typography variant="h5" gutterBottom>{question.text}</Typography>
         {question.choices.map((choice, index) => (

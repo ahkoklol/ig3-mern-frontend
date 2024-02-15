@@ -28,7 +28,7 @@ export const useLogin = () => {
     try {
       // Make a POST request to your backend for user login
       const response: AxiosResponse<LoginResponse> = await axios.post(
-        'http://localhost:5000/api/user/login',
+        '${import.meta.env.VITE_BACKEND_URL}/api/user/login',
         { email, password }
       );
 

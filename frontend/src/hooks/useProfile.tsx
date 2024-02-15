@@ -27,7 +27,7 @@ export const useProfile = () => {
       //console.log('user2:', user) // ok
       if (user) {
         try {
-          const response = await axios.get(`http://localhost:5000/api/user/profile/${user._id}`);
+          const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user._id}`);
           setProfile(response.data);
         } catch (error) {
           console.error("Error fetching user profile:", error);

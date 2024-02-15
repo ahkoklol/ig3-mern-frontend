@@ -29,7 +29,7 @@ const CreatePart: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/part/create', formData);
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/part/create`, formData);
             setSubmitStatus({ status: 'success', message: 'Part created successfully!' });
         } catch (error) {
             console.error('Error creating part:', error);

@@ -47,7 +47,7 @@ const ClassPage: React.FC = () => {
     // Fetch the current class details
     const fetchClassDetails = async () => {
       try {
-        const classResponse = await axios.get(`http://localhost:5000/api/classes/${classId}`);
+        const classResponse = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/classes/${classId}`);
         setCurrentClass(classResponse.data);
       } catch (error) {
         console.error('Failed to fetch class details', error);
@@ -57,7 +57,7 @@ const ClassPage: React.FC = () => {
     // Fetch students belonging to the class
     const fetchStudents = async () => {
       try {
-        const studentResponse = await axios.get(`http://localhost:5000/api/classes/${classId}/students`);
+        const studentResponse = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/classes/${classId}/students`);
         setCurrentClass(prevClass => {
           // Check if prevClass is not null before spreading it
           if (prevClass) {

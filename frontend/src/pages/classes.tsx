@@ -16,7 +16,7 @@ const ClassesPage: React.FC = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/classes/allclasses');
+        const response = await axios.get('${import.meta.env.VITE_BACKEND_URL}/api/classes/allclasses');
         setClasses(response.data);
       } catch (error) {
         console.error('Failed to fetch classes', error);

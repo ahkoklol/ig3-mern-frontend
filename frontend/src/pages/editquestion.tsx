@@ -27,7 +27,7 @@ const EditQuestion: React.FC = () => {
 
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/question/allquestions');
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/question/allquestions`);
       setQuestions(response.data);
     } catch (error) {
       console.error('Error fetching questions:', error);
@@ -46,7 +46,7 @@ const EditQuestion: React.FC = () => {
   const handleConfirmDelete = async () => {
     if (deleteQuestionId) {
       try {
-        await axios.delete(`http://localhost:5000/api/question/${deleteQuestionId}`);
+        await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/question/${deleteQuestionId}`);
         fetchQuestions(); // Refresh the list after deletion
         setOpenDeleteDialog(false); // Close the dialog
       } catch (error) {
@@ -87,7 +87,7 @@ const EditQuestion: React.FC = () => {
   const handleConfirmEdit = async () => {
     if (!editedQuestion) return;
     try {
-      await axios.put(`http://localhost:5000/api/question/edit/${editedQuestion._id}`, editedQuestion);
+      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/question/edit/${editedQuestion._id}`, editedQuestion);
       setEditIndex(null); // Exit edit mode
       fetchQuestions(); // Refresh the list after editing
     } catch (error) {

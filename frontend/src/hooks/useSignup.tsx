@@ -28,7 +28,7 @@ export const useSignup = () => {
     try {
       // Make a POST request to your backend for user signup
       const response: AxiosResponse<SignupResponse> = await axios.post(
-        'http://localhost:5000/api/user/signup',
+        '${import.meta.env.VITE_BACKEND_URL}/api/user/signup',
         { email, password, name, surname, role }
       );
 
