@@ -1,7 +1,7 @@
 {
     "scripts": {
       "dokku": {
-        "predeploy": "npm i vite@latest -g"
+        "predeploy": "npm run build"
       }
     }
   }
