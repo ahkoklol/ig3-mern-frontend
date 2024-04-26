@@ -12,7 +12,7 @@ const PracticePage: React.FC = () => {
         <Grid item xs={12} md={5}>
             <CardMedia
                 component="img"
-                image='../../public/TOEIC-PART-2.webp' // Make sure the path is correct
+                image='/TOEIC-PART-2.webp' // Make sure the path is correct
                 alt="Student Taking Exam"
                 sx={{
                 width: '100%',        // Makes image responsive

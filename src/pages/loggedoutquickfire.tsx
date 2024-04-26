@@ -11,7 +11,7 @@ const LoggedOutQuickfire: React.FC = () => {
         <Grid item xs={12} md={5}>
             <CardMedia
                 component="img"
-                image='../../public/quickfire.jpg' // Make sure the path is correct
+                image='/quickfire.jpg' // Make sure the path is correct
                 alt="Student Taking Exam"
                 sx={{
                 width: '100%',        // Makes image responsive
