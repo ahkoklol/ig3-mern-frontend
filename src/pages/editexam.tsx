@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Button, CircularProgress, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 interface Exam {
   examNumber: number;
@@ -45,8 +46,10 @@ const EditExam: React.FC = () => {
         await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/exam/${currentExam.examNumber}`);
         setExams(exams.filter(exam => exam._id !== currentExam._id));
         handleCloseDeleteDialog();
+        toast.success(`Exam ${currentExam.examNumber} deleted successfully!`);
       } catch (error) {
         console.error('Error deleting exam:', error);
+        toast.error('Failed to delete exam. Please try again.');
       }
     }
   };
@@ -57,8 +60,10 @@ const EditExam: React.FC = () => {
         await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/exam/${currentExam.examNumber}`, { time: editTime });
         setExams(exams.map(exam => exam._id === currentExam._id ? { ...exam, time: editTime } : exam));
         setCurrentExam(null); // Reset current exam
+        toast.success(`Exam ${currentExam.examNumber} time updated successfully!`);
       } catch (error) {
         console.error('Error editing exam time:', error);
+        toast.error('Failed to edit exam time. Please try again.');
       }
     }
   };

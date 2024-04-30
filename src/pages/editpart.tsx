@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Button, CircularProgress, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 interface Part {
     _id: string;
@@ -49,8 +50,10 @@ const EditPart: React.FC = () => {
                 await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/part/${currentPart.ref}`);
                 setParts(parts.filter(part => part.ref !== currentPart.ref));
                 handleCloseDeleteDialog();
+                toast.success(`Part ${currentPart.ref} deleted successfully!`);
             } catch (error) {
                 console.error('Error deleting part:', error);
+                toast.error('Failed to delete part. Please try again.');
             }
         }
     };
@@ -67,8 +70,10 @@ const EditPart: React.FC = () => {
                 const updatedParts = parts.map(part => part.ref === currentPart.ref ? { ...part, ...editData } : part);
                 setParts(updatedParts);
                 setCurrentPart(null); // Reset current part to close edit mode
+                toast.success(`Part ${currentPart.ref} updated successfully!`);
             } catch (error) {
                 console.error('Error updating part:', error);
+                toast.error('Failed to update part. Please try again.');
             }
         }
     };

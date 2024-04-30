@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button, TextField, Typography, Box, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { toast } from 'react-toastify';
 
 interface Question {
   _id: string;
@@ -90,8 +91,10 @@ const EditQuestion: React.FC = () => {
       await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/question/edit/${editedQuestion._id}`, editedQuestion);
       setEditIndex(null); // Exit edit mode
       fetchQuestions(); // Refresh the list after editing
+      toast.success('Question updated successfully!');
     } catch (error) {
       console.error('Error updating question:', error);
+      toast.error('Failed to update question. Please try again.');
     }
   };
 

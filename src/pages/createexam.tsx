@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Container, TextField, Typography, Alert } from '@mui/material';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 interface ExamForm {
     examNumber: number;
@@ -28,9 +29,11 @@ const CreateExam: React.FC = () => {
         try {
             await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/exam/create`, formData);
             setSubmitStatus({ status: 'success', message: 'Exam created successfully!' });
+            toast.success('Exam created successfully!');
         } catch (error) {
             console.error('Error creating exam:', error);
             setSubmitStatus({ status: 'error', message: 'Failed to create exam. Please try again.' });
+            toast.error('Failed to create exam. Please try again.');
         }
     };
 

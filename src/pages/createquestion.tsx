@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Container, TextField, Typography, Alert } from '@mui/material';
 import axios from 'axios';
 import { styled } from '@mui/system';
+import { toast } from 'react-toastify';
 
 const Input = styled('input')({
   display: 'none',
@@ -100,9 +101,11 @@ const CreateQuestion: React.FC = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setSubmitStatus({ status: 'success', message: 'Question created successfully!' });
-      // ... reset form as before
+      toast.success('Question created successfully!');
     } catch (error) {
-      // ... handle error as before
+      console.error('Error creating question:', error);
+      setSubmitStatus({ status: 'error', message: 'Failed to create question. Please try again.' });
+      toast.error('Failed to create question. Please try again.');
     }
   };
 

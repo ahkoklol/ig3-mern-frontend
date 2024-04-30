@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Container, TextField, Typography, Alert } from '@mui/material';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 interface PartForm {
     category: string;
@@ -31,9 +32,11 @@ const CreatePart: React.FC = () => {
         try {
             await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/part/create`, formData);
             setSubmitStatus({ status: 'success', message: 'Part created successfully!' });
+            toast.success('Part created successfully!');
         } catch (error) {
             console.error('Error creating part:', error);
             setSubmitStatus({ status: 'error', message: 'Failed to create part. Please try again.' });
+            toast.error('Failed to create part. Please try again.');
         }
     };
 

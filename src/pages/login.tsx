@@ -14,6 +14,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLogin } from '../hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -29,9 +30,11 @@ export default function Login() {
       await login(email, password);
       // If the signup function executes successfully, it will handle errors and loading states internally.
       navigate('/'); // Redirect to home page
+      toast.success('Logged in successfully!');
     } catch (error) {
       // This block is not needed as error handling is done in the hook.
       console.error('Signup error:', error);
+      toast.error('Failed to log in. Please try again.');
     }
   };
 

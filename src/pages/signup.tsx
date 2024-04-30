@@ -14,6 +14,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSignup } from '../hooks/useSignup';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function SignUp() {
   const [email, setEmail] = useState('');
@@ -36,9 +37,11 @@ function SignUp() {
       await signup(email, password, name, surname, role);
       // If the signup function executes successfully, it will handle errors and loading states internally.
       navigate('/'); // Redirect to home page
+      toast.success('Signed up successfully!');
     } catch (error) {
       // This block is not needed as error handling is done in the hook.
       console.error('Signup error:', error);
+      toast.error('Failed to sign up. Please try again.');
     }
   };
 

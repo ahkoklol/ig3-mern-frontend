@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Container, Typography, Button, Card, CardContent, RadioGroup, FormControlLabel, Radio, CircularProgress, Box, Paper } from '@mui/material';
 import axios from 'axios';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { toast } from 'react-toastify';
 
 interface Question {
   _id: string;
@@ -119,11 +120,14 @@ const TakeExam: React.FC = () => {
         try {
             /*const response = */await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/score/create`, scoreData);
             //console.log('Score submitted successfully:', response.data);
+            toast.success('Well done you have submitted the exam! Here is your score!');
         } catch (error) {
             console.error('Error submitting score:', error);
+            toast.error('Failed to submit score. Please try again later.');
         }
     } else {
         console.error('No user found. Score not submitted.');
+        toast.error('You must be logged in before attemting the exam.');
     }
 };
 

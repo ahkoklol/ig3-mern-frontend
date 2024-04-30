@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Typography, Button, Card, CardContent, RadioGroup, FormControlLabel, Radio, CircularProgress, Box, Paper } from '@mui/material';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 interface Question {
   _id: string;
@@ -79,6 +80,7 @@ const TakeIncompleteSentences: React.FC = () => {
       });
       setScore(newScore); // Set the final score
       setShowResults(true); // Show the results
+      toast.success("Well done on completing the practice!");
     };
   
     if (loading) {
