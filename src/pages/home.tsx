@@ -85,7 +85,7 @@ export default function home() {
               <Button variant="contained" href='/quickfire' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
                 Quickfire
               </Button>
-              <Button variant="contained" href='/exam' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} >
+              <Button variant="contained" href='/exams' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} >
                 Full Exam
               </Button>
               <Button variant="contained" href='/practice' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} >
