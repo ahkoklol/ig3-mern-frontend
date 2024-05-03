@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
   return (
     <AppBar position="fixed" sx={{ backgroundColor: 'rgb(19, 38, 77)' }}>
       <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <Typography variant="h6" component={Link} to="/" sx={{ color: 'white' }}>
+        <Typography variant="h6" component={Link} to="/" sx={{ color: 'white', '&:hover': {color: 'white',  } }}>
           TOEIC Solo Leveling
         </Typography>
         

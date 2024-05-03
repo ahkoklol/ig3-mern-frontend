@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -20,7 +20,13 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, isLoading } = useLogin();
+  const { login, isLoading, success } = useLogin();
+
+  useEffect(() => {
+    if (success) {
+      navigate('/'); // Redirect when signup is successful
+    }
+  }, [success, navigate]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,9 +34,6 @@ export default function Login() {
     try {
       // Call the signup function from the hook
       await login(email, password);
-      // If the signup function executes successfully, it will handle errors and loading states internally.
-      navigate('/'); // Redirect to home page
-      toast.success('Logged in successfully!');
     } catch (error) {
       // This block is not needed as error handling is done in the hook.
       console.error('Signup error:', error);

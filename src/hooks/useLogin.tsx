@@ -19,11 +19,13 @@ type ErrorState = ErrorResponse | null;
 export const useLogin = () => {
   const [error, setError] = useState<ErrorState>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);  // Add success state
   const { dispatch } = useAuthContext();
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     setError(null);
+    setSuccess(false); // Reset success on a new signup attempt
 
     try {
       // Make a POST request to your backend for user login
@@ -50,6 +52,7 @@ export const useLogin = () => {
 
         // Show a success message using react-toastify
         toast.success('Welcome back!'); // add user name and surname to the message
+        setSuccess(true); // Set success to true on successful signup
       }
       setIsLoading(false); // Set isLoading to false here
 
@@ -63,9 +66,11 @@ export const useLogin = () => {
         // Show an error message using react-toastify
         toast.error(responseError.error); // You can customize this message
       }
-      setIsLoading(false); // Set isLoading to false here
+    }
+    finally {
+      setIsLoading(false); // Ensure isLoading is set in finally block
     }
   };
 
-  return { error, isLoading, login };
+  return { error, isLoading, login, success };
 };
