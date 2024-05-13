@@ -1,22 +1,17 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './App.css';
 import { Outlet } from 'react-router-dom';
-//import { useLogout } from './hooks/useLogout';
-//import { useAuthContext } from './hooks/useAuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Chat from './components/Chat';
+import socket from './socket.ts';
 import { ToastContainer } from 'react-toastify';
 
-const theme = createTheme(); // Create the Material-UI theme
+const client = socket;
+
+const theme = createTheme();
 
 function App() {
-  //const { logout } = useLogout();
-  //const { user } = useAuthContext();
-  //console.log(user) //ok
-
-  /* const handleClick = () => {
-    logout();
-  } */
 
   return (
     <ThemeProvider theme={theme}>
@@ -27,7 +22,7 @@ function App() {
           <div>
             <Outlet />
           </div>
-        
+        <Chat />
       </div>
       <Footer />
     </ThemeProvider>
