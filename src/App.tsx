@@ -4,10 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Chat from './components/Chat';
-import socket from './socket.ts';
 import { ToastContainer } from 'react-toastify';
-
-const client = socket;
 
 const theme = createTheme();
 
