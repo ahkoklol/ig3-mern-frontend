@@ -52,7 +52,7 @@ const Profile = () => {
 
   if (profile) {
     return (
-      <Container maxWidth="sm" sx={{ marginBottom: '30px', marginTop: '30px'}}>
+      <Container maxWidth="sm" sx={{ marginBottom: '30px', marginTop: '50px'}}>
         <Paper elevation={3} style={{ padding: "20px", textAlign: "center" }}>
           <Avatar
             alt="User Profile"

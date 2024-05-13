@@ -9,7 +9,7 @@ import SchoolIcon from '@mui/icons-material/School';
 // Teacher Page Component
 const TeacherPage: React.FC = () => {
   return (
-    <Container maxWidth="lg" style={{ marginTop: '20px', marginBottom: '20px' }}>
+    <Container maxWidth="lg" style={{ marginTop: '50px', marginBottom: '20px' }}>
       <Typography variant="h4" gutterBottom sx={{color: 'black'}}>
         Teacher Dashboard
       </Typography>

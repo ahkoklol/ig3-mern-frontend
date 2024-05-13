@@ -37,7 +37,7 @@ interface Score {
       examsTaken: Score[];
       // ... other student properties
     };
-  }
+}
 
 const ClassPage: React.FC = () => {
   const [currentClass, setCurrentClass] = useState<Class | null>(null);
@@ -76,7 +76,7 @@ const ClassPage: React.FC = () => {
   }, [classId]);
 
   return (
-    <Container maxWidth="sm" sx={{marginTop: '30px', marginBottom: '30px'}}>
+    <Container maxWidth="sm" sx={{marginTop: '50px', marginBottom: '30px'}}>
       {currentClass ? (
         <>
           <Typography variant="h5" component="h2" gutterBottom sx={{color: 'black', marginBottom: '20px'}}>
