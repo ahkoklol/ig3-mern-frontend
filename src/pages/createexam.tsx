@@ -38,7 +38,7 @@ const CreateExam: React.FC = () => {
     };
 
     return (
-        <Container maxWidth="lg" sx={{marginTop: '20px', marginBottom: '30px'}}>
+        <Container maxWidth="lg" sx={{marginTop: '50px', marginBottom: '30px'}}>
             <Typography variant="h4" gutterBottom sx={{color: 'black'}}>
                 Create Exam
             </Typography>

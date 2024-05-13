@@ -98,7 +98,7 @@ const Quickfire: React.FC = () => {
   const isCorrectSelected = selectedAnswer === question.correctAnswer;
 
   return (
-    <Container maxWidth="sm" sx={{ marginTop: '30px'}}>
+    <Container maxWidth="sm" sx={{ marginTop: '50px'}}>
         <Typography variant="h3" gutterBottom sx={{color: 'black', marginBottom: '40px'}}>Quickfire</Typography>
       <Paper elevation={3} sx={{ p: 2, mt: 2, marginBottom: '50px' }}>
         {/* Conditionally render the image if imagePath is present */}
