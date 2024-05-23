@@ -73,22 +73,22 @@ export default function home() {
             </Typography>
             {!user && (
             <CardActions style={{ justifyContent: 'center', padding: '0', margin: '8px 0' }}>
-              <Button variant="contained" href='/signup' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
+              <Button variant="contained" color="primary" href='/signup' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} > 
                 Sign Up for Free
               </Button>
-              <Button variant="contained" href='/loggedOutPractice' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} >
+              <Button variant="contained" color="primary" href='/loggedOutPractice' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} >
                 Explore Practice Tests
               </Button>
             </CardActions>)}
             {user && (
               <CardActions style={{ justifyContent: 'center', padding: '0', margin: '8px 0' }}>
-              <Button variant="contained" href='/quickfire' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
+              <Button variant="contained" color="primary" href='/quickfire' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} > 
                 Quickfire
               </Button>
-              <Button variant="contained" href='/exams' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} >
+              <Button variant="contained" color="primary" href='/exams' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} >
                 Full Exam
               </Button>
-              <Button variant="contained" href='/practice' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} >
+              <Button variant="contained" color="primary" href='/practice' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} >
                 Part Practice
               </Button>
             </CardActions>

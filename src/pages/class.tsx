@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Container, Typography, Paper, List, ListItem, ListItemText } from '@mui/material';
+import { Container, Typography, Paper, List, ListItem, ListItemText, TextField, Button, Box } from '@mui/material';
+import UpdateIcon from '@mui/icons-material/Update';
 import ProgressChart from '../components/ProgressChart';
 
 
@@ -11,7 +12,7 @@ interface Student {
   name: string;
   surname: string;
   role: string;
-  examsTaken: Score[];
+  examsTaken: Exam[];
   // Add other fields as needed based on your backend data structure
 }
 
@@ -20,6 +21,13 @@ interface Class {
   name: string;
   teacher: string;
   students: Student[]; // Assuming the students array contains student details
+}
+
+interface Exam {
+  _id: string;
+  examNumber: number;
+  questions: number[];
+  time: number;
 }
 
 interface Score {
@@ -34,14 +42,16 @@ interface Score {
       name: string;
       surname: string;
       role: string;
-      examsTaken: Score[];
+      examsTaken: Exam[];
       // ... other student properties
     };
 }
 
 const ClassPage: React.FC = () => {
   const [currentClass, setCurrentClass] = useState<Class | null>(null);
+  const [className, setClassName] = useState<string>('');
   const { classId } = useParams<{ classId: string }>();
+  const [teacherEmail, setTeacherEmail] = useState<string>('');
 
   useEffect(() => {
     // Fetch the current class details
@@ -75,6 +85,22 @@ const ClassPage: React.FC = () => {
     fetchStudents();
   }, [classId]);
 
+  // Update current class
+  const updateClass = async () => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/classes/create`, {
+        className,
+        teacherEmail,
+      });
+      console.log(response.data);
+      // Optionally refetch the class details to update the UI
+      const classResponse = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/classes/${classId}`);
+      setCurrentClass(classResponse.data);
+    } catch (error) {
+      console.error('Failed to update class', error);
+    }
+  };
+
   return (
     <Container maxWidth="sm" sx={{marginTop: '50px', marginBottom: '30px'}}>
       {currentClass ? (
@@ -82,6 +108,36 @@ const ClassPage: React.FC = () => {
           <Typography variant="h5" component="h2" gutterBottom sx={{color: 'black', marginBottom: '20px'}}>
             You are now monitoring the class {currentClass.name}
           </Typography>
+          <Typography variant="h6" component="h2" gutterBottom sx={{color: 'black', marginBottom: '20px'}}>
+            If new students have joined or quit your class, please update your class by filling in the details below:
+          </Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: '40px' }}>
+            <TextField
+              label="Class Name"
+              value={className}
+              onChange={(e) => setClassName(e.target.value)}
+              variant="outlined"
+              size="small"
+              sx={{ marginBottom: '10px' }}
+            />
+            <TextField
+              label="Teacher Email"
+              value={teacherEmail}
+              onChange={(e) => setTeacherEmail(e.target.value)}
+              variant="outlined"
+              size="small"
+              sx={{ marginBottom: '10px' }}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<UpdateIcon />}
+              onClick={updateClass}
+              sx={{ margin: "10px", backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}} }
+            >
+              Update Class
+            </Button>
+          </Box>
           <Paper elevation={3}>
             <List>
             {currentClass.students.map((student) => (

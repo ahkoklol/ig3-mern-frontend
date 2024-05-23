@@ -27,10 +27,10 @@ const TeacherPage: React.FC = () => {
                   <Typography>
                     Edit or create quickfire questions. These questions are designed to be answered quickly and are used to improve the students speed at answering single questions.
                   </Typography>
-                  <Button variant="contained" color="primary" component={Link} to="/createquestion" sx={{ marginTop: '15px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}>
+                  <Button variant="contained" color="primary" component={Link} to="/createquestion" sx={{ marginTop: '15px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'} }}>
                         Create Question
                     </Button>
-                    <Button variant="contained" color="secondary" component={Link} to="/editquestion" sx={{ marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}>
+                    <Button variant="contained" color="secondary" component={Link} to="/editquestion" sx={{ marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'} }}>
                         Edit Question
                     </Button>
                 </CardContent>
@@ -44,10 +44,10 @@ const TeacherPage: React.FC = () => {
                   <Typography>
                     Edit or create full TOEIC type exams.
                   </Typography>
-                  <Button variant="contained" color="primary" component={Link} to="/createexam" sx={{ marginTop: '15px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}>
+                  <Button variant="contained" color="primary" component={Link} to="/createexam" sx={{ marginTop: '15px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'} }}>
                         Create Exam
                     </Button>
-                    <Button variant="contained" color="secondary" component={Link} to="/editexam" sx={{ marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}>
+                    <Button variant="contained" color="secondary" component={Link} to="/editexam" sx={{ marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'} }}>
                         Edit Exam
                     </Button>
                 </CardContent>
@@ -61,10 +61,10 @@ const TeacherPage: React.FC = () => {
                   <Typography>
                     Edit or create practice parts. Students can practice a single part of the TOEIC exam (Listening, Reading comprehension, or Choosing the right word)
                   </Typography>
-                  <Button variant="contained" color="primary" component={Link} to="/createpart" sx={{ marginTop: '15px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}>
+                  <Button variant="contained" color="primary" component={Link} to="/createpart" sx={{ marginTop: '15px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'} }}>
                         Create Practice Part
                     </Button>
-                    <Button variant="contained" color="secondary" component={Link} to="/editpart" sx={{ marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}>
+                    <Button variant="contained" color="secondary" component={Link} to="/editpart" sx={{ marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'} }}>
                         Edit Practice Part
                     </Button>
                 </CardContent>
@@ -78,7 +78,7 @@ const TeacherPage: React.FC = () => {
                   <Typography>
                     Monitor your students' improvement with the progress dashboard.
                   </Typography>
-                  <Button variant="contained" color="primary" component={Link} to="/classes" sx={{ marginTop: '15px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}>
+                  <Button variant="contained" color="primary" component={Link} to="/classes" sx={{ marginTop: '15px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'} }}>
                         Monitor Students
                     </Button>
                 </CardContent>

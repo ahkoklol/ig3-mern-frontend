@@ -29,7 +29,7 @@ const LoggedOutExam: React.FC = () => {
             
             </Grid>
       </Grid>
-      <Button variant="contained" href='/signup' color="primary" sx={{ mt: 4, marginBottom: '40px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}>
+      <Button variant="contained" href='/signup' color="primary" sx={{ mt: 4, marginBottom: '40px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'} }}>
             Sign Up Now
           </Button>
     </Container>

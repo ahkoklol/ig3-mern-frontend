@@ -87,7 +87,7 @@ const Profile = () => {
               {user && <ProgressChart studentId={user._id} />}
             </ListItem>
           </List>
-          <Button startIcon={<Edit />} variant="outlined" color="primary" sx={{ margin: "10px", backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}} }>
+          <Button startIcon={<Edit />} variant="contained" color="primary" sx={{ margin: "10px", backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}} }>
             Edit Profile
           </Button>
         </Paper>

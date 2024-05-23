@@ -119,8 +119,15 @@ const TakeExam: React.FC = () => {
         // Post the score data to the backend
         try {
             /*const response = */await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/score/create`, scoreData);
-            //console.log('Score submitted successfully:', response.data);
-            toast.success('Well done you have submitted the exam! Here is your score!');
+            toast.info(`Well done you have submitted the exam! Check your score at the top of the page!`, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
         } catch (error) {
             console.error('Error submitting score:', error);
             toast.error('Failed to submit score. Please try again later.');
