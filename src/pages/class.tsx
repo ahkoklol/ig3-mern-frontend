@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Container, Typography, Paper, List, ListItem, ListItemText, TextField, Button, Box } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import ProgressChart from '../components/ProgressChart';
+import { toast } from 'react-toastify';
 
 
 interface Student {
@@ -96,8 +97,13 @@ const ClassPage: React.FC = () => {
       // Optionally refetch the class details to update the UI
       const classResponse = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/classes/${classId}`);
       setCurrentClass(classResponse.data);
+      toast.success('Class updated successfully! The page will now reload.');
+      setTimeout(() => {
+        window.location.reload(); // Refresh the page after a delay
+      }, 2000); // Adjust the delay duration as needed
     } catch (error) {
       console.error('Failed to update class', error);
+      toast.error('Failed to update class. Please try again.');
     }
   };
 
