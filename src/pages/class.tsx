@@ -12,7 +12,7 @@ interface Student {
   name: string;
   surname: string;
   role: string;
-  examsTaken: Exam[];
+  examsTaken: Score[];
   // Add other fields as needed based on your backend data structure
 }
 

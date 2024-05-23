@@ -62,7 +62,7 @@ function SignUp() {
             marginBottom: '50px'
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, backgroundColor: 'rgb(62, 86, 124)' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -124,14 +124,14 @@ function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, marginTop: '10px', backgroundColor: 'rgb(61, 89, 171)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}
               disabled={isLoading}
             >
               Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link href="/login" variant="body2" sx={{ color: 'red' }}>
                   Already have an account? Sign in
                 </Link>
               </Grid>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { IconButton, Drawer, TextField, Button, List, ListItem, ListItemText, Typography } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -17,11 +17,12 @@ const Chat: React.FC = () => {
 
   const { profile } = useProfile();
   const { user } = useAuthContext();
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (profile && profile.name && profile.surname) {
-        setUsername(`${profile.name} ${profile.surname}`);
-      }
+      setUsername(`${profile.name} ${profile.surname}`);
+    }
   }, [profile]);
 
   useEffect(() => {
@@ -44,6 +45,22 @@ const Chat: React.FC = () => {
     };
   }, []);
 
+  useLayoutEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => {
+        if (messagesEndRef.current) {
+          messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300); // Ensure this delay matches the drawer animation duration
+    }
+  }, [open]);
+
   const handleToggleChat = () => setOpen(!open);
 
   const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
@@ -51,28 +68,29 @@ const Chat: React.FC = () => {
     if (message && username) {
       socket.emit('chat message', { user: username, text: message });
       setMessages(prevMessages => [...prevMessages, { user: username, text: message }]);
-        setMessage('');
+      setMessage('');
     }
   };
 
   return (
     <>
-    {user && (
-      <IconButton onClick={handleToggleChat} color="primary" aria-label="chat" sx={{ color: 'blue', marginBottom: '10px' }}>
-        <ChatIcon />
-      </IconButton>
-    )};
+      {user && (
+        <IconButton onClick={handleToggleChat} color="primary" aria-label="chat" sx={{ color: 'blue', marginBottom: '10px' }}>
+          <ChatIcon />
+        </IconButton>
+      )}
       <Drawer anchor="right" open={open} onClose={handleToggleChat}>
-        <div style={{ width: '350px', padding: '20px' }}>
-          <Typography>General Chat</Typography>
-          <List>
+        <div style={{ width: '350px', display: 'flex', flexDirection: 'column', height: '100vh' }}>
+          <Typography style={{ display: 'flex', padding: '20px', alignItems: 'center', borderBottom: '1px solid #ccc' }}>General Chat</Typography>
+          <List style={{ flexGrow: 1, overflowY: 'auto', padding: '0 20px' }}>
             {messages.map((msg, index) => (
               <ListItem key={index}>
                 <ListItemText primary={`${msg.user}: ${msg.text}`} />
               </ListItem>
             ))}
+            <div ref={messagesEndRef} />
           </List>
-          <form onSubmit={sendMessage} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <form onSubmit={sendMessage} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '20px', borderTop: '1px solid #ccc' }}>
             <TextField
               label="Message"
               type="text"
