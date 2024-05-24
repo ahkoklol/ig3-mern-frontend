@@ -14,14 +14,13 @@ interface Student {
   surname: string;
   role: string;
   examsTaken: Score[];
-  // Add other fields as needed based on your backend data structure
 }
 
 interface Class {
   _id: string;
   name: string;
   teacher: string;
-  students: Student[]; // Assuming the students array contains student details
+  students: Student[]; 
 }
 
 interface Exam {
@@ -44,7 +43,6 @@ interface Score {
       surname: string;
       role: string;
       examsTaken: Exam[];
-      // ... other student properties
     };
 }
 
@@ -144,7 +142,7 @@ const ClassPage: React.FC = () => {
               Update Class
             </Button>
           </Box>
-          <Paper elevation={3}>
+          <Paper elevation={3} style={{ padding: "20px", textAlign: "center", width: '100%', maxWidth: '800px', margin: '0 auto' }}>
             <List>
             {currentClass.students.map((student) => (
             <>
@@ -154,10 +152,6 @@ const ClassPage: React.FC = () => {
                 <ListItem>
                     <ListItemText primary={`Email: ${student.email}`} sx={{mt: '-20px'}} />
                 </ListItem>
-                <ListItem>
-                    <ListItemText primary={`Exams taken: ${student.examsTaken}`} sx={{mt: '-20px'}} />
-                </ListItem>
-                
                 <ListItem>
                 <ProgressChart studentId={student._id} />
                 </ListItem>

@@ -124,7 +124,7 @@ function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, marginTop: '10px', backgroundColor: 'rgb(61, 89, 171)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'} }}
+              sx={{ mt: 3, mb: 2, marginTop: '10px', backgroundColor: 'rgb(61, 89, 171)', color: 'white', '&:hover': {backgroundColor: 'rgb(51, 79, 161)', borderColor: 'rgb(75, 184, 185)'} }}
               disabled={isLoading}
             >
               Sign Up

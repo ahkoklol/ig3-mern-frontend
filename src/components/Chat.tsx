@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { IconButton, Drawer, TextField, Button, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { IconButton, Drawer, TextField, Button, List, ListItem, Typography, Box } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useProfile } from "../hooks/useProfile";
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -37,6 +37,7 @@ const Chat: React.FC = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
+        onClick: handleToggleChat, // Open the chat drawer when the toast is clicked
       });
     });
 
@@ -81,11 +82,29 @@ const Chat: React.FC = () => {
       )}
       <Drawer anchor="right" open={open} onClose={handleToggleChat}>
         <div style={{ width: '350px', display: 'flex', flexDirection: 'column', height: '100vh' }}>
-          <Typography style={{ display: 'flex', padding: '20px', alignItems: 'center', borderBottom: '1px solid #ccc' }}>General Chat</Typography>
-          <List style={{ flexGrow: 1, overflowY: 'auto', padding: '0 20px' }}>
+          <Typography style={{ display: 'flex', padding: '30px', alignItems: 'center', borderBottom: '1px solid #ccc', fontWeight: 'bold' }}>General Chat</Typography>
+          <List style={{ flexGrow: 1, overflowY: 'auto', padding: '0 20px', overflowX: 'hidden', marginTop: '20px', marginBottom: '10px' }}>
             {messages.map((msg, index) => (
-              <ListItem key={index}>
-                <ListItemText primary={`${msg.user}: ${msg.text}`} />
+              <ListItem key={index} style={{ wordBreak: 'break-word', justifyContent: msg.user === username ? 'flex-end' : 'flex-start' }}>
+                <Box
+                  sx={{
+                    display: 'inline-block',
+                    padding: '10px',
+                    borderRadius: '10px',
+                    backgroundColor: msg.user === username ? '#d1e8ff' : '#f7f7f7',
+                    color: msg.user === username ? 'black' : 'black',
+                    maxWidth: '70%',
+                    wordBreak: 'break-word',
+                    textAlign: msg.user === username ? 'right' : 'left'
+                  }}
+                >
+                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                    {msg.user}
+                  </Typography>
+                  <Typography variant="body1">
+                    {msg.text}
+                  </Typography>
+                </Box>
               </ListItem>
             ))}
             <div ref={messagesEndRef} />

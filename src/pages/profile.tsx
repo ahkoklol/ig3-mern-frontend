@@ -1,15 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Container,
-  Avatar,
-  Typography,
-  Paper,
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
-import { Edit } from "@mui/icons-material";
+import { Container, Typography, Paper, List, ListItem, ListItemText, } from "@mui/material";
 import { useProfile } from "../hooks/useProfile";
 import { format, parseISO } from 'date-fns';
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -53,12 +43,7 @@ const Profile = () => {
   if (profile) {
     return (
       <Container maxWidth="sm" sx={{ marginBottom: '30px', marginTop: '50px'}}>
-        <Paper elevation={3} style={{ padding: "20px", textAlign: "center" }}>
-          <Avatar
-            alt="User Profile"
-            src="https://via.placeholder.com/150"
-            style={{ width: "100px", height: "100px", margin: "0 auto" }}
-          />
+        <Paper elevation={3} style={{ padding: "20px", textAlign: "center", width: '100%', maxWidth: '800px', margin: '0 auto' }}>
           <Typography variant="h4" style={{ marginTop: "20px" }}>
             {profile.name} {profile.surname}
           </Typography>
@@ -87,9 +72,6 @@ const Profile = () => {
               {user && <ProgressChart studentId={user._id} />}
             </ListItem>
           </List>
-          <Button startIcon={<Edit />} variant="contained" color="primary" sx={{ margin: "10px", backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}} }>
-            Edit Profile
-          </Button>
         </Paper>
       </Container>
     );
