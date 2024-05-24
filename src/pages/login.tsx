@@ -100,7 +100,7 @@ export default function Login() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/signup" variant="body2" sx={{ color: 'red' }}>
+                <Link href="/signup" variant="body2" sx={{ color: 'red', '&:hover': { color: 'red' }}}>
                   Don' t have an account? Sign up
                 </Link>
               </Grid>

@@ -131,7 +131,7 @@ function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2" sx={{ color: 'red' }}>
+                <Link href="/login" variant="body2" sx={{ color: 'red', '&:hover': { color: 'red' }}}>
                   Already have an account? Sign in
                 </Link>
               </Grid>
