@@ -28,23 +28,25 @@ const Chat: React.FC = () => {
   useEffect(() => {
     socket.on('chat message', (msg) => {
       setMessages(prevMessages => [...prevMessages, msg]);
-      // Display a toast notification for each new message
-      toast.info(`New message from ${msg.user}: ${msg.text}`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        onClick: handleToggleChat, // Open the chat drawer when the toast is clicked
-      });
+      // Display a toast notification for each new message if the chat drawer is not open
+      if (!open) {
+        toast.info(`New message from ${msg.user}: ${msg.text}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          onClick: handleToggleChat, // Open the chat drawer when the toast is clicked
+        });
+      }
     });
 
     return () => {
       socket.off('chat message');
     };
-  }, []);
+  }, [open]);
 
   useLayoutEffect(() => {
     if (messagesEndRef.current) {
