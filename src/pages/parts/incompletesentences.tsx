@@ -1,33 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Grid, List, ListItem, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance.ts';
+import { useAuthContext } from '../../hooks/useAuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
 
 interface Part {
-    _id: string; // Assuming each part has a unique ID
+    _id: string; 
     category: string;
     part: string;
     ref: string;
-    questions: string[]; // Adjust according to your actual question model
+    questions: string[]; 
     time: number;
 }
 
 const IncompleteSentences: React.FC = () => {
-    const [parts, setParts] = useState<Part[]>([]); // State to hold the fetched parts
+    const [parts, setParts] = useState<Part[]>([]); 
+
+    const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+        navigate('/login');
+        }
+    }, [user, navigate]);
 
     useEffect(() => {
         // Function to fetch parts
         const fetchParts = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/part/allparts/Incomplete-Sentences`);
-                setParts(response.data); // Assuming the API returns an array of parts
+                const response = await axiosInstance.get(`/api/part/allparts/Incomplete-Sentences`);
+                setParts(response.data); 
             } catch (error) {
                 console.error('Error fetching parts:', error);
             }
         };
 
-        fetchParts(); // Call the fetch function
-    }, []); // Empty dependency array means this effect runs once on mount
+        fetchParts(); 
+    }, []); 
 
     return (
         <Container maxWidth="lg">

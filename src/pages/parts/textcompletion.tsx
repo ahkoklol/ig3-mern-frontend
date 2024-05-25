@@ -4,30 +4,30 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 interface Part {
-    _id: string; // Assuming each part has a unique ID
+    _id: string;
     category: string;
     part: string;
     ref: string;
-    questions: string[]; // Adjust according to your actual question model
+    questions: string[];
     time: number;
 }
 
 const TextCompletion: React.FC = () => {
-    const [parts, setParts] = useState<Part[]>([]); // State to hold the fetched parts
+    const [parts, setParts] = useState<Part[]>([]);
 
     useEffect(() => {
         // Function to fetch parts
         const fetchParts = async () => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/part/allparts/Text-Completion`);
-                setParts(response.data); // Assuming the API returns an array of parts
+                setParts(response.data);
             } catch (error) {
                 console.error('Error fetching parts:', error);
             }
         };
 
-        fetchParts(); // Call the fetch function
-    }, []); // Empty dependency array means this effect runs once on mount
+        fetchParts();
+    }, []);
 
     return (
         <Container maxWidth="lg">
