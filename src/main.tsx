@@ -29,7 +29,13 @@ import CreateExam from './pages/createexam.tsx';
 import EditExam from './pages/editexam.tsx';
 import PracticePage from './pages/practice.tsx';
 import IncompleteSentences from './pages/parts/incompletesentences.tsx';
-import TakeIncompleteSentences from './pages/parts/takepart/takeincompletesentences.tsx';
+import Conversations from './pages/parts/conversations.tsx';
+import Passages from './pages/parts/passages.tsx';
+import Photographs from './pages/parts/photographs.tsx';
+import Talks from './pages/parts/talks.tsx';
+import TakePart from './pages/parts/takepart/takepart.tsx';
+import TextCompletion from './pages/parts/textcompletion.tsx';
+import QuestionResponse from './pages/parts/questionresponse.tsx';
 import CreatePart from './pages/createpart.tsx';
 import EditPart from './pages/editpart.tsx';
 import ClassesPage from './pages/classes.tsx';
@@ -58,7 +64,13 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="editexam" element={<EditExam />} />
     <Route path="practice" element={<PracticePage />} />
     <Route path="part/incomplete-sentences" element={<IncompleteSentences />} />
-    <Route path="part/:ref" element={<TakeIncompleteSentences />} />
+    <Route path="part/conversations" element={<Conversations />} />
+    <Route path="part/passages" element={<Passages />} />
+    <Route path="part/photographs" element={<Photographs />} />
+    <Route path="part/talks" element={<Talks />} />
+    <Route path="part/:ref" element={<TakePart />} />
+    <Route path="part/text-completion" element={<TextCompletion />} />
+    <Route path="part/question-response" element={<QuestionResponse />} />
     <Route path="createpart" element={<CreatePart />} />
     <Route path="editpart" element={<EditPart />} />
     <Route path="classes" element={<ClassesPage />} />

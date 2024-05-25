@@ -5,6 +5,7 @@ import axiosInstance from '../../../axiosInstance.ts';
 import { toast } from 'react-toastify';
 import { useAuthContext } from '../../../hooks/useAuthContext.tsx';
 import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface Question {
   _id: string;
@@ -22,7 +23,7 @@ interface PartData {
   time: number;
 }
 
-const TakeIncompleteSentences: React.FC = () => {
+const TakePart: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<{ [questionId: string]: string }>({});
   const [loading, setLoading] = useState<boolean>(true);
@@ -135,7 +136,7 @@ const TakeIncompleteSentences: React.FC = () => {
             </Typography>
           </Box>
         ))}
-        <Button variant="contained" color="primary" onClick={() => setShowResults(false)} href="/practice" sx={{mb:4, backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}}>
+        <Button component={RouterLink} to="/practice" variant="contained" color="primary" onClick={() => setShowResults(false)} sx={{mb:4, backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white' }}}>
           Practice Another Part
         </Button>
       </Container>
@@ -168,4 +169,4 @@ const TakeIncompleteSentences: React.FC = () => {
   );
 };
 
-export default TakeIncompleteSentences;
+export default TakePart;

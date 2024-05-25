@@ -1,41 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Grid, List, ListItem, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../axiosInstance.ts';
+import { useAuthContext } from '../../hooks/useAuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
 
 interface Part {
-    _id: string;
+    _id: string; 
     category: string;
     part: string;
     ref: string;
-    questions: string[];
+    questions: string[]; 
     time: number;
 }
 
 const TextCompletion: React.FC = () => {
-    const [parts, setParts] = useState<Part[]>([]);
+    const [parts, setParts] = useState<Part[]>([]); 
+
+    const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+        navigate('/login');
+        }
+    }, [user, navigate]);
 
     useEffect(() => {
         // Function to fetch parts
         const fetchParts = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/part/allparts/Text-Completion`);
-                setParts(response.data);
+                const response = await axiosInstance.get(`/api/part/allparts/Text-Completion`);
+                setParts(response.data); 
             } catch (error) {
                 console.error('Error fetching parts:', error);
             }
         };
 
-        fetchParts();
-    }, []);
+        fetchParts(); 
+    }, []); 
 
     return (
         <Container maxWidth="lg">
             <Typography variant="h4" sx={{ mb: 2, textAlign: 'center', color: 'black' }}>
-                Text Completion
+            Text Completion
             </Typography>
             <Typography variant="body2" sx={{ mb: 2, textAlign: 'center', color: 'black' }}>
-            Select the best answer of the four choices (words, phrases, or a sentence) to complete the text. There are four questions for each text. You will have 8 minutes to complete this part. Your score will be given at the end.
+            Select the best answer of the four choices (words, phrases, or a sentence) to complete the text. There are four questions for each text. You will get 8 minutes to complete this part. Your score will be given at the end.
             </Typography>
             <Grid container spacing={2}>
                 <Grid item xs={12}>

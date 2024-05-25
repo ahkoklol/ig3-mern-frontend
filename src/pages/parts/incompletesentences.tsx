@@ -46,7 +46,7 @@ const IncompleteSentences: React.FC = () => {
                 Incomplete Sentences
             </Typography>
             <Typography variant="body2" sx={{ mb: 2, textAlign: 'center', color: 'black' }}>
-            Select the best answer of the four choices to complete the sentence. You will have 10 minutes to complete this part. Your score will be given at the end.
+            Select the best answer of the four choices to complete the sentence. You will get 10 minutes to complete this part. Your score will be given at the end.
             </Typography>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
