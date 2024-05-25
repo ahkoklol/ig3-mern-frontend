@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Container, Typography, Box, Grid, Card, CardContent } from '@mui/material';
 import QuizIcon from '@mui/icons-material/Quiz';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import SchoolIcon from '@mui/icons-material/School';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useNavigate } from 'react-router-dom';
 
 // Teacher Page Component
 const TeacherPage: React.FC = () => {
+
+  const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+        navigate('/login');
+        }
+    }, [user, navigate]);
+
+  
   return (
     <Container maxWidth="lg" style={{ marginTop: '50px', marginBottom: '20px' }}>
       <Typography variant="h4" gutterBottom sx={{color: 'black'}}>

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Typography, Button, Card, CardContent, RadioGroup, FormControlLabel, Radio, CircularProgress, Box, Paper } from '@mui/material';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance.ts';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface Question {
   _id: string;
@@ -40,16 +42,24 @@ const TakeExam: React.FC = () => {
   const [timer, setTimer] = useState<number | null>(null);
 
   const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+        navigate('/login');
+        }
+    }, [user, navigate]);
+
   //console.log('user:', user) //ok
 
   useEffect(() => {
     const fetchExam = async () => {
       try {
-        const examResponse = await axios.get<ExamData>(`${import.meta.env.VITE_BACKEND_URL}/api/exam/${examNumber}`);
+        const examResponse = await axiosInstance.get<ExamData>(`/api/exam/${examNumber}`);
         setTimer(examResponse.data.time); // Set the timer with the fetched exam time
         const examQuestions = await Promise.all(
           examResponse.data.questions.map(questionId =>
-            axios.get<Question>(`${import.meta.env.VITE_BACKEND_URL}/api/question/${questionId}`)
+            axiosInstance.get<Question>(`/api/question/${questionId}`)
           )
         );
         setQuestions(examQuestions.map(res => res.data));
@@ -118,7 +128,7 @@ const TakeExam: React.FC = () => {
 
         // Post the score data to the backend
         try {
-            /*const response = */await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/score/create`, scoreData);
+            /*const response = */await axiosInstance.post(`/api/score/create`, scoreData);
             toast.info(`Well done you have submitted the exam! Check your score at the top of the page!`, {
               position: "top-right",
               autoClose: 5000,
@@ -179,7 +189,7 @@ const TakeExam: React.FC = () => {
             </Typography>
           </Box>
         ))}
-        <Button variant="contained" color="primary" onClick={() => setShowResults(false)} href="/exams" sx={{mb:4, backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}}>
+        <Button component={RouterLink} to="/exams" variant="contained" color="primary" onClick={() => setShowResults(false)} sx={{mb:4, backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}}>
           Take Another Exam
         </Button>
       </Container>

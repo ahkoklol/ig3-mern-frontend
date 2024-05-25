@@ -4,7 +4,8 @@ import { useProfile } from "../hooks/useProfile";
 import { format, parseISO } from 'date-fns';
 import { useAuthContext } from "../hooks/useAuthContext";
 import ProgressChart from "../components/ProgressChart";
-import axios from "axios";
+import axiosInstance from "../axiosInstance";
+import { useNavigate } from 'react-router-dom';
 
 // Define the Exam interface
 interface Exam {
@@ -28,9 +29,17 @@ const Profile = () => {
   const { user } = useAuthContext();
   const [examsTaken, setExamsTaken] = useState<Exam[]>([]);
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+      if (!user) {
+      navigate('/login');
+      }
+  }, [user, navigate]);
+
   useEffect(() => {
     if (user) {
-      axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/score/all/${user._id}`)
+      axiosInstance.get(`/api/score/all/${user._id}`)
         .then(response => {
           setExamsTaken(response.data);
         })

@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Container, TextField, Typography, Alert } from '@mui/material';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance.ts';
 import { styled } from '@mui/system';
 import { toast } from 'react-toastify';
+import { useAuthContext } from '../hooks/useAuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Input = styled('input')({
   display: 'none',
@@ -38,6 +41,15 @@ const CreateQuestion: React.FC = () => {
   const [submitStatus, setSubmitStatus] = useState<{ status: 'idle' | 'success' | 'error', message: string }>({ status: 'idle', message: '' });
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [uploadedAudio, setUploadedAudio] = useState<File | null>(null);
+
+  const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+        navigate('/login');
+        }
+    }, [user, navigate]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index?: number) => {
     if (typeof index === 'number') {
@@ -97,7 +109,7 @@ const CreateQuestion: React.FC = () => {
     }
 
     try {
-      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/question/create`, data, {
+      await axiosInstance.post(`/api/question/create`, data, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setSubmitStatus({ status: 'success', message: 'Question created successfully!' });
@@ -113,7 +125,7 @@ const CreateQuestion: React.FC = () => {
     <Container maxWidth="lg" style={{ marginTop: '60px', marginBottom: '50px' }}>
       <Typography variant="h4" gutterBottom sx={{ color: 'black' }}>Create a question</Typography>
       <Typography variant="body2" gutterBottom sx={{ color: 'black', textAlign: 'justify' }}>This section is available only to teachers. Please fill in all fields, if the students don't have the explanation they may get pissed off. Do not use "". Please use numbers if you are creating an exam and A) B) C) D) for the answers. The correct answer has to be the same as a choice (if correct choice is A) car, input "A) car") If you are creating a Quickfire question, please input 0 for the exam number. The category is either Listening or Reading. There are 4 parts in Listening: Photographs, Question-Response, Conversations, Talks. There are 3 parts in Reading: Incomplete-Sentences, Text-Completion, Passages. When entering part, please use "-" if there is a space and mind the uppercase (eg: Incomplete-Sentences, different from incomplete-sentences). Please be careful when entering information and double check.</Typography>
-      <Button variant="contained" href='/teacher' sx={{ marginBottom: '20px', marginTop: '20px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
+      <Button component={RouterLink} to="/teacher" variant="contained" sx={{ marginBottom: '20px', marginTop: '20px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} > 
             Back to Dashboard
         </Button>
       <form onSubmit={handleSubmit}>

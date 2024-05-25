@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Typography, List, ListItem, ListItemText, CircularProgress, Grid, CardMedia } from '@mui/material';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance.ts';
+import { useAuthContext } from '../hooks/useAuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
 
 interface Exam {
   examNumber: number;
@@ -12,10 +14,19 @@ const ExamPage: React.FC = () => {
   const [exams, setExams] = useState<Exam[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+        navigate('/login');
+        }
+    }, [user, navigate]);
+
   useEffect(() => {
     const fetchExams = async () => {
       try {
-        const response = await axios.get<Exam[]>(`${import.meta.env.VITE_BACKEND_URL}/api/exam/allexams`);
+        const response = await axiosInstance.get<Exam[]>(`/api/exam/allexams`);
         setExams(response.data);
       } catch (error) {
         console.error('Failed to fetch exams:', error);

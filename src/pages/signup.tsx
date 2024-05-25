@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useSignup } from '../hooks/useSignup';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useAuthContext } from '../hooks/useAuthContext.tsx'
 
 function SignUp() {
   const [email, setEmail] = useState('');
@@ -28,6 +29,14 @@ function SignUp() {
   const navigate = useNavigate();
 
   const { signup, isLoading, success } = useSignup();
+
+  const { user } = useAuthContext();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     if (success) {

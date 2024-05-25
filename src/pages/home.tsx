@@ -4,6 +4,7 @@ import HeadphonesIcon from '@mui/icons-material/Headphones';
 import TimelapseIcon from '@mui/icons-material/Timelapse';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function home() {
 
@@ -73,24 +74,24 @@ export default function home() {
             </Typography>
             {!user && (
             <CardActions style={{ justifyContent: 'center', padding: '0', margin: '8px 0' }}>
-              <Button variant="contained" color="primary" href='/signup' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} > 
+              <Button component={RouterLink} to="/signup" variant="contained" color="primary" sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} > 
                 Sign Up for Free
               </Button>
-              <Button variant="contained" color="primary" href='/loggedOutPractice' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} >
+              <Button component={RouterLink} to="/loggedOutPractice" variant="contained" color="primary" sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} >
                 Explore Practice Tests
               </Button>
             </CardActions>)}
             {user && (
               <CardActions style={{ justifyContent: 'center', padding: '0', margin: '8px 0' }}>
-              <Button variant="contained" color="primary" href='/quickfire' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} > 
-                Quickfire
-              </Button>
-              <Button variant="contained" color="primary" href='/exams' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} >
-                Full Exam
-              </Button>
-              <Button variant="contained" color="primary" href='/practice' sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} >
-                Part Practice
-              </Button>
+              <Button component={RouterLink} to="/quickfirePage" variant="contained" color="primary" sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': { backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white' } }}>
+                  Quickfire
+                </Button>
+                <Button component={RouterLink} to="/exams" variant="contained" color="primary" sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': { backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white' } }}>
+                  Full Exam
+                </Button>
+                <Button component={RouterLink} to="/practice" variant="contained" color="primary" sx={{ backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': { backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white' } }}>
+                  Part Practice
+                </Button>
             </CardActions>
             )}
           </Paper>

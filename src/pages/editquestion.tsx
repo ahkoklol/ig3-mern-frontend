@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance.ts';
 import { Button, TextField, Typography, Box, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { toast } from 'react-toastify';
+import { useAuthContext } from '../hooks/useAuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface Question {
   _id: string;
@@ -22,13 +25,22 @@ const EditQuestion: React.FC = () => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
     const [deleteQuestionId, setDeleteQuestionId] = useState<string | null>(null);
 
+    const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+        navigate('/login');
+        }
+    }, [user, navigate]);
+
   useEffect(() => {
     fetchQuestions();
   }, []);
 
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/question/allquestions`);
+      const response = await axiosInstance.get(`/api/question/allquestions`);
       setQuestions(response.data);
     } catch (error) {
       console.error('Error fetching questions:', error);
@@ -47,7 +59,7 @@ const EditQuestion: React.FC = () => {
   const handleConfirmDelete = async () => {
     if (deleteQuestionId) {
       try {
-        await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/question/${deleteQuestionId}`);
+        await axiosInstance.delete(`/api/question/${deleteQuestionId}`);
         fetchQuestions(); // Refresh the list after deletion
         setOpenDeleteDialog(false); // Close the dialog
       } catch (error) {
@@ -63,7 +75,7 @@ const EditQuestion: React.FC = () => {
 
   /*const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:5000/api/question/${id}`);
+      await axiosInstance.delete(`http://localhost:5000/api/question/${id}`);
       fetchQuestions(); // Refresh the list after deletion
     } catch (error) {
       console.error('Error deleting question:', error);
@@ -88,7 +100,7 @@ const EditQuestion: React.FC = () => {
   const handleConfirmEdit = async () => {
     if (!editedQuestion) return;
     try {
-      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/question/edit/${editedQuestion._id}`, editedQuestion);
+      await axiosInstance.put(`/api/question/edit/${editedQuestion._id}`, editedQuestion);
       setEditIndex(null); // Exit edit mode
       fetchQuestions(); // Refresh the list after editing
       toast.success('Question updated successfully!');
@@ -102,7 +114,7 @@ const EditQuestion: React.FC = () => {
     <Container maxWidth="lg">
       <Typography variant="h4" gutterBottom sx={{color: 'black', marginTop: '60px'}}>Edit Questions</Typography>
       <Typography variant="body2" gutterBottom sx={{color: 'black', textAlign: 'justify'}}>This section is only available to teachers. You can edit questions, answers and explanations. You can also delete a question, but be careful doing so. Do not use "". Please use numbers when editing exam questions and A) B) C) D) for the answers. The correct answer has to be the same as the correct choice (input "A) car" if the correct answer is A). Please fill in all fields, and if you don't give the explanation, students may get pissed. If you are creating a Quickfire question, please input 0 for the exam number. The category is either Listening or Reading. There are 4 parts in Listening: Photographs, Question-Response, Conversations, Talks. There are 3 parts in Reading: Incomplete-Sentences, Text-Completion, Passages. When entering part, please use "-" if there is a space and mind the uppercase (eg: Incomplete-Sentences, different from incomplete-sentences). Please be careful when entering information and double check.</Typography>
-      <Button variant="contained" href='/teacher' sx={{ marginTop: '10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
+      <Button component={RouterLink} to="/teacher" variant="contained" sx={{ marginTop:'10px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} > 
             Back to Dashboard
         </Button>
         {questions.map((question, index) => (
@@ -224,7 +236,7 @@ const EditQuestion: React.FC = () => {
           )}
         </Box>
       ))}
-        <Button variant="contained" href='/teacher' sx={{ marginBottom: '20px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
+        <Button component={RouterLink} to="/teacher" variant="contained" sx={{ marginBottom: '20px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} > 
             Back to Dashboard
         </Button>
     </Container>

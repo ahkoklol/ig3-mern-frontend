@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance.ts';
 import { Container, List, ListItem, ListItemText, Paper, Typography, TextField, Button, Alert } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useAuthContext } from '../hooks/useAuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
 
 interface Class {
   _id: string;
@@ -27,11 +29,19 @@ const ClassesPage: React.FC = () => {
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
   const [userFormData, setUserFormData] = useState<Partial<User>>({});
   const [submitStatus, setSubmitStatus] = useState<{ status: 'idle' | 'success' | 'error', message: string }>({ status: 'idle', message: '' });
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/classes/allclasses`);
+        const response = await axiosInstance.get(`/api/classes/allclasses`);
         setClasses(response.data);
       } catch (error) {
         console.error('Failed to fetch classes', error);
@@ -40,7 +50,7 @@ const ClassesPage: React.FC = () => {
 
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/allusers`);
+        const response = await axiosInstance.get(`/api/user/allusers`);
         setUsers(response.data);
       } catch (error) {
         console.error('Failed to fetch users', error);
@@ -71,7 +81,7 @@ const ClassesPage: React.FC = () => {
   const handleSaveUser = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/${editingUserId}`, userFormData);
+      const response = await axiosInstance.put(`/api/user/${editingUserId}`, userFormData);
       setUsers(users.map(user => user._id === editingUserId ? response.data : user));
       setEditingUserId(null);
       setUserFormData({});

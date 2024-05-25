@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Typography, Grid, Button, CardMedia } from '@mui/material';
+import { useAuthContext } from '../hooks/useAuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 const QuickfirePage: React.FC = () => {
+
+  const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+        navigate('/login');
+        }
+    }, [user, navigate]);
+
   return (
     <Container maxWidth="lg">
         <Typography variant="h4" sx={{ color: 'black', mb: 6, mt: 8 }}>
@@ -29,9 +42,9 @@ const QuickfirePage: React.FC = () => {
             
             </Grid>
       </Grid>
-      <Button variant="contained" href='/quickfire' color="primary" sx={{ mt: 4, marginBottom: '40px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'} }}>
+      <Button component={RouterLink} to="/quickfire" variant="contained" color="primary" sx={{ mt: 4, marginBottom: '40px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'} }}>
             Go to Quickfire
-          </Button>
+      </Button>
     </Container>
   );
 };

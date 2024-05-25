@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Button, CircularProgress, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance.ts';
 import { toast } from 'react-toastify';
+import { useAuthContext } from '../hooks/useAuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface Part {
     _id: string;
@@ -18,10 +21,19 @@ const EditPart: React.FC = () => {
     const [currentPart, setCurrentPart] = useState<Part | null>(null);
     const [editData, setEditData] = useState({ category: '', part: '', time: 0 });
 
+    const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+        navigate('/login');
+        }
+    }, [user, navigate]);
+
     useEffect(() => {
         const fetchParts = async () => {
             try {
-                const response = await axios.get<Part[]>(`${import.meta.env.VITE_BACKEND_URL}/api/part/allparts`);
+                const response = await axiosInstance.get<Part[]>(`/api/part/allparts`);
                 setParts(response.data);
                 setEditData({ category: '', part: '', time: 0 }); // Reset edit data
             } catch (error) {
@@ -47,7 +59,7 @@ const EditPart: React.FC = () => {
     const handleDelete = async () => {
         if (currentPart) {
             try {
-                await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/part/${currentPart.ref}`);
+                await axiosInstance.delete(`/api/part/${currentPart.ref}`);
                 setParts(parts.filter(part => part.ref !== currentPart.ref));
                 handleCloseDeleteDialog();
                 toast.success(`Part ${currentPart.ref} deleted successfully!`);
@@ -66,7 +78,7 @@ const EditPart: React.FC = () => {
     const handleEditPart = async () => {
         if (currentPart) {
             try {
-                await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/part/${currentPart.ref}`, editData);
+                await axiosInstance.put(`/api/part/${currentPart.ref}`, editData);
                 const updatedParts = parts.map(part => part.ref === currentPart.ref ? { ...part, ...editData } : part);
                 setParts(updatedParts);
                 setCurrentPart(null); // Reset current part to close edit mode
@@ -90,7 +102,7 @@ const EditPart: React.FC = () => {
     return (
         <Container sx={{ marginTop: '20px', marginBottom: '30px' }}>
             <Typography variant="h4" sx={{ marginTop: '30px', color: 'black', marginBottom: '20px' }}>Edit Practice Parts</Typography>
-            <Button variant="contained" href='/teacher' sx={{ marginBottom: '30px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': { backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)' }}}>
+            <Button component={RouterLink} to="/teacher" variant="contained" sx={{ marginBottom: '30px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}}>
                 Back to Dashboard
             </Button>
             {parts.map((part) => (

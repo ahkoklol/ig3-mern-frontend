@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Typography } from '@mui/material';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ChartData } from 'chart.js';
-import axios from 'axios';
 import { format, parseISO } from 'date-fns';
+import axiosInstance from "../axiosInstance";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -34,7 +34,7 @@ const ProgressChart: React.FC<ProgressChartProps> = ({ studentId }) => {
   useEffect(() => {
     const fetchScores = async () => {
       try {
-        const response = await axios.get<Score[]>(`${import.meta.env.VITE_BACKEND_URL}/api/score/all/${studentId}`);
+        const response = await axiosInstance.get<Score[]>(`/api/score/all/${studentId}`);
         const scores = response.data;
 
         // Sort scores by date and calculate average

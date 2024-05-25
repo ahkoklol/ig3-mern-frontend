@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Typography, Grid, Button, CardMedia } from '@mui/material';
+import { useAuthContext } from '../hooks/useAuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const LoggedOutQuickfire: React.FC = () => {
+
+  const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+        navigate('/');
+        }
+    }, [user, navigate]);
+    
   return (
     <Container maxWidth="lg">
         <Typography variant="h4" sx={{ mb: 2, color: 'black', marginBottom: '50px' }}>

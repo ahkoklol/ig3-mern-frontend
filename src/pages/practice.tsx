@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Typography, Grid, CardMedia, List, ListItemText, ListItem } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const PracticePage: React.FC = () => {
+    const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+        navigate('/login');
+        }
+    }, [user, navigate]);
+
   return (
     <Container maxWidth="lg" sx={{marginTop: '60px', marginBottom: '40px'}}>
         <Typography variant="h4" sx={{ color: 'black', marginBottom: '30px' }}>

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Button, CircularProgress, Grid, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance.ts';
 import { toast } from 'react-toastify';
+import { useAuthContext } from '../hooks/useAuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface Exam {
   examNumber: number;
@@ -16,10 +19,19 @@ const EditExam: React.FC = () => {
   const [currentExam, setCurrentExam] = useState<Exam | null>(null);
   const [editTime, setEditTime] = useState<number>(0);
 
+  const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+        navigate('/login');
+        }
+    }, [user, navigate]);
+
   useEffect(() => {
     const fetchExams = async () => {
       try {
-        const response = await axios.get<Exam[]>(`${import.meta.env.VITE_BACKEND_URL}/api/exam/allexams`);
+        const response = await axiosInstance.get<Exam[]>(`/api/exam/allexams`);
         setExams(response.data);
       } catch (error) {
         console.error('Failed to fetch exams:', error);
@@ -43,7 +55,7 @@ const EditExam: React.FC = () => {
   const handleDelete = async () => {
     if (currentExam) {
       try {
-        await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/exam/${currentExam.examNumber}`);
+        await axiosInstance.delete(`/api/exam/${currentExam.examNumber}`);
         setExams(exams.filter(exam => exam._id !== currentExam._id));
         handleCloseDeleteDialog();
         toast.success(`Exam ${currentExam.examNumber} deleted successfully!`);
@@ -57,7 +69,7 @@ const EditExam: React.FC = () => {
   const handleEditTime = async () => {
     if (currentExam && editTime > 0) {
       try {
-        await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/exam/${currentExam.examNumber}`, { time: editTime });
+        await axiosInstance.patch(`/api/exam/${currentExam.examNumber}`, { time: editTime });
         setExams(exams.map(exam => exam._id === currentExam._id ? { ...exam, time: editTime } : exam));
         setCurrentExam(null); // Reset current exam
         toast.success(`Exam ${currentExam.examNumber} time updated successfully!`);
@@ -76,7 +88,7 @@ const EditExam: React.FC = () => {
     <Container sx={{marginTop: '20px', marginBottom: '30px'}}>
       <Typography variant="h4" sx={{marginTop: '30px', color: 'black', marginBottom: '20px'}}>Edit Exams</Typography>
       <Typography variant="body2" gutterBottom sx={{ color: 'black', textAlign: 'justify', marginBottom: '20px' }}>This section is available only to teachers. You can only edit an exam time, and this time has to be in seconds. Please convert the exam time to seconds. Do not input "3600 seconds", only input 3600. If you create a wrong exam number, you can only delete the exam. The questions will remain as they do not belong solely to that exam (yes, you created 200 questions for an exam, not bad!). You can create the exam again in a few clicks!</Typography>
-      <Button variant="contained" href='/teacher' sx={{ marginBottom: '30px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}} > 
+      <Button component={RouterLink} to="/teacher" variant="contained" sx={{ marginBottom: '30px', backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)', color: 'white'}}} > 
             Back to Dashboard
         </Button>
       {exams.map((exam) => (

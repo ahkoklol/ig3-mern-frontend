@@ -15,12 +15,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useLogin } from '../hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useAuthContext } from '../hooks/useAuthContext.tsx'
 
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login, isLoading, success } = useLogin();
+
+  const { user } = useAuthContext();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     if (success) {

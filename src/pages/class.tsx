@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Container, Typography, Paper, List, ListItem, ListItemText, TextField, Button, Box } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import ProgressChart from '../components/ProgressChart';
 import { toast } from 'react-toastify';
-
+import { useAuthContext } from '../hooks/useAuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from "../axiosInstance";
 
 interface Student {
   _id: string;
@@ -51,12 +52,20 @@ const ClassPage: React.FC = () => {
   const [className, setClassName] = useState<string>('');
   const { classId } = useParams<{ classId: string }>();
   const [teacherEmail, setTeacherEmail] = useState<string>('');
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
 
   useEffect(() => {
     // Fetch the current class details
     const fetchClassDetails = async () => {
       try {
-        const classResponse = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/classes/${classId}`);
+        const classResponse = await axiosInstance.get(`/api/classes/${classId}`);
         setCurrentClass(classResponse.data);
       } catch (error) {
         console.error('Failed to fetch class details', error);
@@ -66,7 +75,7 @@ const ClassPage: React.FC = () => {
     // Fetch students belonging to the class
     const fetchStudents = async () => {
       try {
-        const studentResponse = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/classes/${classId}/students`);
+        const studentResponse = await axiosInstance.get(`/api/classes/${classId}/students`);
         setCurrentClass(prevClass => {
           // Check if prevClass is not null before spreading it
           if (prevClass) {
@@ -87,13 +96,13 @@ const ClassPage: React.FC = () => {
   // Update current class
   const updateClass = async () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/classes/create`, {
+      const response = await axiosInstance.post(`/api/classes/create`, {
         className,
         teacherEmail,
       });
       console.log(response.data);
       // Optionally refetch the class details to update the UI
-      const classResponse = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/classes/${classId}`);
+      const classResponse = await axiosInstance.get(`/api/classes/${classId}`);
       setCurrentClass(classResponse.data);
       toast.success('Class updated successfully! The page will now reload.');
       setTimeout(() => {

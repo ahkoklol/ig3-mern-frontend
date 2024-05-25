@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Paper, Button, CircularProgress } from '@mui/material';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance.ts';
+import { useAuthContext } from '../hooks/useAuthContext.tsx';
+import { useNavigate } from 'react-router-dom';
 
 interface Question {
   _id: string;
@@ -63,10 +65,19 @@ const Quickfire: React.FC = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+        navigate('/login');
+        }
+    }, [user, navigate]);
+
   const fetchRandomQuestion = async (): Promise<void> => {
     setLoading(true);
     try {
-      const response = await axios.get<Question>(`${import.meta.env.VITE_BACKEND_URL}/api/question/random`);
+      const response = await axiosInstance.get<Question>(`/api/question/random`);
       setQuestion(response.data);
       setSelectedAnswer(null); // Reset selected answer for the new question
     } catch (error) {
