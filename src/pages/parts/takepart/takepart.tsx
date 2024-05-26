@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Typography, Button, Card, CardContent, RadioGroup, FormControlLabel, Radio, CircularProgress, Box, Paper } from '@mui/material';
-import axiosInstance from '../../../axiosInstance.ts';
+import axiosInstance from '../../../axiosInstance';
 import { toast } from 'react-toastify';
-import { useAuthContext } from '../../../hooks/useAuthContext.tsx';
+import { useAuthContext } from '../../../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -13,13 +13,15 @@ interface Question {
   choices: string[];
   correctAnswer: string;
   teacherCorrection: string;
+  imagePath?: string;
+  audioPath?: string;
 }
 
 interface PartData {
   category: string;
   part: string;
   ref: string;
-  questions: string[];
+  questions: Question[];
   time: number;
 }
 
@@ -42,20 +44,20 @@ const TakePart: React.FC = () => {
   }, [user, navigate]);
 
   useEffect(() => {
-    const fetchExam = async () => {
+    const fetchPart = async () => {
       try {
-        const examResponse = await axiosInstance.get<PartData>(`/api/part/${ref}`);
-        setTimer(examResponse.data.time); // Set the timer with the fetched exam time
-        setQuestions(examResponse.data.questions as unknown as Question[]); // Cast directly to Question[]
+        const partResponse = await axiosInstance.get<PartData>(`/api/part/${ref}`);
+        setTimer(partResponse.data.time); // Set the timer with the fetched part time
+        setQuestions(partResponse.data.questions); // Directly set questions
       } catch (error) {
-        console.error('Error fetching exam:', error);
+        console.error('Error fetching part:', error);
       } finally {
         setLoading(false);
       }
     };
 
     if (ref) {
-      fetchExam();
+      fetchPart();
     }
   }, [ref]);
 
@@ -110,7 +112,7 @@ const TakePart: React.FC = () => {
     return (
       <Container maxWidth="sm">
         <Typography variant="h3" gutterBottom sx={{ color: 'black', marginBottom: '40px', marginTop: '50px' }}>Your Score: {score}/{questions.length}</Typography>
-        {questions.map((question/*, questionIndex*/) => (
+        {questions.map((question) => (
           <Box key={question._id} component={Paper} elevation={3} sx={{ p: 2, mt: 2, marginBottom: '30px' }}>
             <Typography variant="h5" gutterBottom>{question.text}</Typography>
             {question.choices.map((choice, index) => (
@@ -151,6 +153,14 @@ const TakePart: React.FC = () => {
         <Card key={question._id} variant="outlined" sx={{ marginBottom: 2 }}>
           <CardContent>
             <Typography>{question.text}</Typography>
+            {/* Conditionally render the image if imagePath is present */}
+            {question.imagePath && (
+              <img src={`${import.meta.env.VITE_BACKEND_URL}/${question.imagePath}`} alt="Question" style={{ maxWidth: '100%', marginBottom: '20px', marginTop: '20px' }} />
+            )}
+            {/* Conditionally render the audio if audioPath is present */}
+            {question.audioPath && (
+              <audio controls src={`${import.meta.env.VITE_BACKEND_URL}/${question.audioPath}`} style={{ width: '100%', marginBottom: '20px' }} />
+            )}
             <RadioGroup
               value={answers[question._id] || ''}
               onChange={(event) => handleAnswerChange(event, question._id)}
