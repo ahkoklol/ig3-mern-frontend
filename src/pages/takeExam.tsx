@@ -189,7 +189,7 @@ const TakeExam: React.FC = () => {
             </Typography>
           </Box>
         ))}
-        <Button component={RouterLink} to="/exams" variant="contained" color="primary" onClick={() => setShowResults(false)} sx={{mb:4, backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}}}>
+        <Button component={RouterLink} to="/exams" variant="contained" color="primary" onClick={() => setShowResults(false)} sx={{ margin: "10px", backgroundColor: 'rgb(85, 194, 195)', color: 'white', '&:hover': {backgroundColor: 'rgb(75, 184, 185)', borderColor: 'rgb(75, 184, 185)'}} }>
           Take Another Exam
         </Button>
       </Container>
